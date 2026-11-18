@@ -5,6 +5,7 @@ require_once __DIR__ . '/../app/controllers/AuthController.php';
 require_once __DIR__ . '/../app/controllers/DashboardController.php';
 require_once __DIR__ . '/../app/controllers/ProductoController.php';
 require_once __DIR__ . '/../app/controllers/ProveedorController.php';
+require_once __DIR__ . '/../app/controllers/CompraController.php';
 
 // Obtener la ruta solicitada
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -262,89 +263,108 @@ switch ($ruta) {
 
         exit;
 
-        // Listar proveedores
-case '/proveedores':
-    if (!isset($_SESSION['usuario'])) {
-        header('Location: /el_papelito/public/login');
+    // Listar proveedores
+    case '/proveedores':
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        $controlador = new ProveedorController($conexion);
+        $controlador->index();
+        break;
+
+    // Registrar proveedor
+    case '/proveedores/crear':
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        $controlador = new ProveedorController($conexion);
+        $resultado = $controlador->crear();
+
+        header('Location: /el_papelito/public/proveedores?registro=' .
+            ($resultado ? 'exitoso' : 'error'));
         exit;
-    }
 
-    $controlador = new ProveedorController($conexion);
-    $controlador->index();
-    break;
+    // Consultar proveedor
+    case '/proveedores/editar':
+        if (!isset($_SESSION['usuario'])) {
+            http_response_code(401);
+            exit;
+        }
 
-// Registrar proveedor
-case '/proveedores/crear':
-    if (!isset($_SESSION['usuario'])) {
-        header('Location: /el_papelito/public/login');
+        $controlador = new ProveedorController($conexion);
+        header('Content-Type: application/json');
+        echo json_encode($controlador->editar());
         exit;
-    }
 
-    $controlador = new ProveedorController($conexion);
-    $resultado = $controlador->crear();
+    // Actualizar proveedor
+    case '/proveedores/actualizar':
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
 
-    header('Location: /el_papelito/public/proveedores?registro=' .
-        ($resultado ? 'exitoso' : 'error'));
-    exit;
+        $controlador = new ProveedorController($conexion);
+        $resultado = $controlador->actualizar();
 
-// Consultar proveedor
-case '/proveedores/editar':
-    if (!isset($_SESSION['usuario'])) {
-        http_response_code(401);
+        header('Location: /el_papelito/public/proveedores?actualizacion=' .
+            ($resultado ? 'exitosa' : 'error'));
         exit;
-    }
 
-    $controlador = new ProveedorController($conexion);
-    header('Content-Type: application/json');
-    echo json_encode($controlador->editar());
-    exit;
+    // Cambiar estado del proveedor
+    case '/proveedores/estado':
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
 
-// Actualizar proveedor
-case '/proveedores/actualizar':
-    if (!isset($_SESSION['usuario'])) {
-        header('Location: /el_papelito/public/login');
+        $controlador = new ProveedorController($conexion);
+        $resultado = $controlador->cambiarEstado();
+
+        header('Location: /el_papelito/public/proveedores?estado=' .
+            ($resultado ? 'exitoso' : 'error'));
         exit;
-    }
 
-    $controlador = new ProveedorController($conexion);
-    $resultado = $controlador->actualizar();
 
-    header('Location: /el_papelito/public/proveedores?actualizacion=' .
-        ($resultado ? 'exitosa' : 'error'));
-    exit;
+    // Eliminar proveedor
+    case '/proveedores/eliminar':
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
 
-// Cambiar estado del proveedor
-case '/proveedores/estado':
-    if (!isset($_SESSION['usuario'])) {
-        header('Location: /el_papelito/public/login');
+        $controlador = new ProveedorController($conexion);
+        $resultado = $controlador->eliminar();
+
+        if ($resultado) {
+            header('Location: /el_papelito/public/proveedores?eliminacion=exitosa');
+        } else {
+            header('Location: /el_papelito/public/proveedores?eliminacion=error');
+        }
         exit;
-    }
 
-    $controlador = new ProveedorController($conexion);
-    $resultado = $controlador->cambiarEstado();
+    case '/compras':
+        $controlador = new CompraController($conexion);
+        $controlador->index();
+        break;
 
-    header('Location: /el_papelito/public/proveedores?estado=' .
-        ($resultado ? 'exitoso' : 'error'));
-    exit;
+    case '/compras/crear':
+        $controlador = new CompraController($conexion);
+        $controlador->crear();
+        break;
 
-
-// Eliminar proveedor
-case '/proveedores/eliminar':
-    if (!isset($_SESSION['usuario'])) {
-        header('Location: /el_papelito/public/login');
-        exit;
-    }
-
-    $controlador = new ProveedorController($conexion);
-    $resultado = $controlador->eliminar();
-
-    if ($resultado) {
-        header('Location: /el_papelito/public/proveedores?eliminacion=exitosa');
-    } else {
-        header('Location: /el_papelito/public/proveedores?eliminacion=error');
-    }
-    exit;
-
+    case '/compras/obtener-detalle':
+        $controlador = new CompraController($conexion);
+        $controlador->obtenerDetalleAjax();
+        break;
+        
+    case '/compras/anular':
+        $controlador = new CompraController($conexion);
+        $controlador->anular();
+        break;
 
     default:
         http_response_code(404);

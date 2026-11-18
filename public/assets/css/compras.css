@@ -1,0 +1,743 @@
+
+/* Modal de compras */
+
+.modal-compra {
+    max-width: 1000px;
+}
+
+.titulo-seccion-compra {
+    font-size: 16px;
+    margin-bottom: 18px;
+    color: #171717;
+}
+
+.modal-compra .form-grid {
+    margin-bottom: 28px;
+}
+
+.modal-compra .form-group select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    background: white;
+}
+
+.modal-compra .form-group select:focus {
+    border-color: #f044a8;
+}
+
+/* Encabezado de productos */
+
+.productos-compra-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.productos-compra-header p {
+    color: #777;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+#btnAgregarProducto {
+    background: #fff0f8;
+    color: #d92b91;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#btnAgregarProducto:hover {
+    background: #fbd8ec;
+}
+
+/* Tabla de productos */
+
+.tabla-productos-compra {
+    padding: 12px;
+    margin-bottom: 20px;
+    box-shadow: none;
+    border: 1px solid #f1f1f1;
+}
+
+.tabla-productos-compra table {
+    min-width: 750px;
+}
+
+.tabla-productos-compra select,
+.tabla-productos-compra input {
+    width: 100%;
+    min-width: 85px;
+    padding: 9px;
+    border: 1px solid #e5e5e5;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+}
+
+.tabla-productos-compra select:focus,
+.tabla-productos-compra input:focus {
+    border-color: #f044a8;
+}
+
+/* Total */
+
+.total-compra-modal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff0f8;
+    padding: 18px 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.total-compra-modal span {
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+}
+
+.total-compra-modal h2 {
+    color: #d92b91;
+    font-size: 23px;
+}
+
+/* Adaptación */
+
+@media (max-width: 700px) {
+    .modal-compra {
+        padding: 18px;
+    }
+
+    .productos-compra-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .total-compra-modal {
+        gap: 10px;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+/* =====================================
+   MODAL DETALLE DE COMPRA
+===================================== */
+
+.modal-detalle-compra {
+    width: 95%;
+    max-width: 1050px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-detalle-compra h3 {
+    margin: 25px 0 15px;
+    color: #171717;
+    font-size: 17px;
+}
+
+/* Información general */
+
+.detalle-compra-resumen {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 20px 0 25px;
+}
+
+.detalle-compra-resumen > div {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 16px;
+    background: #fff7fc;
+    border: 1px solid #f8dcec;
+    border-radius: 12px;
+}
+
+.detalle-compra-resumen span {
+    color: #777;
+    font-size: 13px;
+}
+
+.detalle-compra-resumen strong {
+    color: #171717;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+/* Tabla de productos */
+
+.modal-detalle-compra .tabla-contenedor {
+    overflow-x: auto;
+    margin-top: 15px;
+}
+
+.modal-detalle-compra table {
+    width: 100%;
+    min-width: 650px;
+}
+
+/* Total */
+
+.detalle-compra-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 20px;
+    background: #fff0f8;
+    border-radius: 12px;
+}
+
+.detalle-compra-total span {
+    color: #171717;
+    font-weight: 600;
+}
+
+.detalle-compra-total strong {
+    color: #e34d50;
+    font-size: 23px;
+}
+
+/* Observaciones */
+
+.detalle-compra-observaciones {
+    margin-top: 20px;
+    padding: 18px;
+    background: #fafafa;
+    border-radius: 12px;
+}
+
+.detalle-compra-observaciones h3 {
+    margin: 0 0 10px;
+}
+
+.detalle-compra-observaciones p {
+    color: #555;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* Adaptación a pantallas pequeñas */
+
+@media (max-width: 700px) {
+    .detalle-compra-resumen {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .detalle-compra-total {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 450px) {
+    .detalle-compra-resumen {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =====================================
+   FILTROS DE COMPRAS
+===================================== */
+
+.contenido-proveedores .filtros {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 22px;
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #eee5eb;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(23, 23, 23, 0.035);
+}
+
+.contenido-proveedores .filtros form {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 14px;
+    align-items: end;
+}
+
+.contenido-proveedores .filtros .form-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 9px;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+}
+
+.contenido-proveedores .filtros .form-group label {
+    display: block;
+    min-height: 16px;
+    margin: 0;
+    color: #343039;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 16px;
+}
+
+/* Todos los campos con las mismas dimensiones */
+
+.contenido-proveedores .filtros .form-group input,
+.contenido-proveedores .filtros .form-group select {
+    display: block;
+    width: 100%;
+    height: 46px !important;
+    min-height: 46px;
+    max-height: 46px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 12px;
+    border: 1px solid #e5dce2;
+    border-radius: 9px;
+    background-color: #fff;
+    color: #29252b;
+    font-family: inherit;
+    font-size: 13px;
+    line-height: normal;
+    outline: none;
+    box-shadow: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contenido-proveedores .filtros .form-group input[type="date"] {
+    padding: 0 10px;
+}
+
+.contenido-proveedores .filtros .form-group input::placeholder {
+    color: #aaa1a9;
+}
+
+.contenido-proveedores .filtros .form-group input:focus,
+.contenido-proveedores .filtros .form-group select:focus {
+    border-color: #f044a8;
+    box-shadow: 0 0 0 3px rgba(240, 68, 168, 0.10);
+}
+
+/* Botones */
+
+.contenido-proveedores .filtros .acciones-filtros {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+    height: 46px;
+    margin: 0;
+}
+
+.contenido-proveedores .filtros .acciones-filtros button {
+    height: 46px;
+    min-height: 46px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 9px;
+    background: #f044a8;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.contenido-proveedores .filtros .acciones-filtros button:hover {
+    background: #d92b91;
+}
+
+.contenido-proveedores .filtros .acciones-filtros a {
+    color: #777;
+    font-size: 13px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.contenido-proveedores .filtros .acciones-filtros a:hover {
+    color: #e34d50;
+}
+
+/* Pantallas medianas */
+
+@media (max-width: 1200px) {
+    .contenido-proveedores .filtros form {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* Tablets */
+
+@media (max-width: 768px) {
+    .contenido-proveedores .filtros form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Celulares */
+
+@media (max-width: 520px) {
+    .contenido-proveedores .filtros {
+        padding: 16px;
+    }
+
+    .contenido-proveedores .filtros form {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .contenido-proveedores .filtros .acciones-filtros {
+        height: auto;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .contenido-proveedores .filtros .acciones-filtros button {
+        width: 100%;
+    }
+
+    .contenido-proveedores .filtros .acciones-filtros a {
+        text-align: center;
+        padding: 8px;
+    }
+}
+
+
+/* =====================================
+   PAGINACIÓN DE COMPRAS
+===================================== */
+
+.paginacion-compras {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 15px;
+    background: #ffffff;
+    border: 1px solid #f3e3ed;
+    border-radius: 12px;
+}
+
+.paginacion-info {
+    color: #777;
+    font-size: 13px;
+}
+
+.paginacion-controles {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-paginacion {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 90px;
+    padding: 10px 15px;
+    border: 1px solid #f044a8;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #f044a8;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.btn-paginacion:hover:not(.deshabilitado) {
+    background: #f044a8;
+    color: #ffffff;
+}
+
+.btn-paginacion.deshabilitado {
+    border-color: #e5e5e5;
+    color: #aaa;
+    background: #f8f8f8;
+    cursor: not-allowed;
+}
+
+.pagina-actual {
+    color: #171717;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    .paginacion-compras {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .paginacion-controles {
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .btn-paginacion {
+        min-width: 80px;
+    }
+}
+
+/* =====================================
+   ESTADOS DE COMPRAS
+===================================== */
+
+.estado-compra {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+.estado-recibida {
+    color: #16834a;
+    background: #e5f8ed;
+    border: 1px solid #bce9cd;
+}
+
+.estado-anulada {
+    color: #c43d45;
+    background: #fdebed;
+    border: 1px solid #f5c5c8;
+}
+
+
+/* ==============================
+   BOTONES DE ACCIONES DE COMPRAS
+============================== */
+
+.acciones-compra {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.btn-ver-compra,
+.btn-anular-compra {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+/* Botón Ver */
+
+.btn-ver-compra {
+    color: #333;
+    background: #f5f5f5;
+    border: 1px solid #dedede;
+}
+
+.btn-ver-compra:hover {
+    background: #fce7f5;
+    border-color: #F47BD9;
+    color: #c52d91;
+}
+
+.btn-ver-compra span {
+    font-size: 15px;
+}
+
+/* Botón Anular */
+
+.btn-anular-compra {
+    color: #c43d45;
+    background: #fff0f0;
+    border: 1px solid #f5c5c8;
+}
+
+.btn-anular-compra:hover {
+    background: #fde0e2;
+    border-color: #e34d50;
+    color: #a92730;
+}
+
+.btn-anular-compra span {
+    font-size: 17px;
+    font-weight: 800;
+}
+
+/* Estado de enfoque */
+
+.btn-ver-compra:focus-visible,
+.btn-anular-compra:focus-visible {
+    outline: 3px solid rgba(244, 123, 217, 0.3);
+    outline-offset: 2px;
+}
+
+/* Adaptación para pantallas pequeñas */
+
+@media (max-width: 600px) {
+    .acciones-compra {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-ver-compra,
+    .btn-anular-compra {
+        width: 100%;
+    }
+}
+
+/* ==============================
+   FILAS DE COMPRAS ANULADAS
+============================== */
+
+.fila-compra-anulada {
+    background: #fff8f8;
+}
+
+.fila-compra-anulada:hover {
+    background: #fff0f0;
+}
+
+/* Texto de la fila */
+
+.fila-compra-anulada td {
+    color: #888;
+}
+
+/* Mantener visible el estado */
+
+.fila-compra-anulada .estado-anulada {
+    color: #c43d45;
+}
+
+/* Diferenciar el documento */
+
+.fila-compra-anulada td:nth-child(4) {
+    color: #999;
+}
+
+/* Mantener visibles los botones */
+
+.fila-compra-anulada .btn-ver-compra {
+    color: #333;
+}
+
+.fila-compra-anulada .btn-anular-compra {
+    opacity: 0.5;
+}
+
+/* ==============================
+   ALINEACIÓN DE IMPORTES
+============================== */
+
+/* Columna Total: sexta columna */
+
+.tabla-compras th:nth-child(6),
+.tabla-compras td:nth-child(6) {
+    text-align: right;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Destacar los importes */
+
+.tabla-compras tbody td:nth-child(6) {
+    font-weight: 700;
+    color: #171717;
+}
+
+/* Importes de compras anuladas */
+
+.tabla-compras .fila-compra-anulada td:nth-child(6) {
+    color: #999;
+}
+
+
+/* =====================================
+   PANEL UNIFICADO DE LISTADO Y PAGINACIÓN
+===================================== */
+
+.panel-listado-compras {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #f1e3ed;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(30, 20, 30, 0.04);
+}
+
+/* Contenedor de la tabla */
+
+.panel-listado-compras > .tabla-contenedor {
+    width: 100%;
+    margin: 0;
+    padding: 20px 20px 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    overflow-x: auto;
+}
+
+/* Tabla */
+
+.panel-listado-compras table {
+    width: 100%;
+    margin: 0;
+}
+
+/* Paginación integrada */
+
+.panel-listado-compras .paginacion-compras {
+    margin: 0;
+    padding: 20px;
+    background: #ffffff;
+    border: none;
+    border-top: 1px solid #f0e8ee;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* Información de registros */
+
+.panel-listado-compras .paginacion-info {
+    color: #777;
+    font-size: 13px;
+}
+
+/* Adaptación móvil */
+
+@media (max-width: 700px) {
+    .panel-listado-compras > .tabla-contenedor {
+        padding: 12px 12px 0;
+    }
+
+    .panel-listado-compras .paginacion-compras {
+        padding: 15px;
+    }
+}
