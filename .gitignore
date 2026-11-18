@@ -1,0 +1,26 @@
+
+# Archivos de configuración y credenciales
+.env
+.env.*
+!.env.example
+
+# Dependencias
+/vendor/
+
+# Archivos temporales
+*.log
+*.tmp
+*.bak
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Configuración de editores
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Archivos temporales de XAMPP
+*.cache

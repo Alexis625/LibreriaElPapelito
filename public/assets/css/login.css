@@ -1,0 +1,243 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #fff4fb;
+    color: #171717;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+}
+
+/* Contenedor principal */
+
+.login-container {
+    width: 100%;
+    max-width: 950px;
+    min-height: 560px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 15px 50px rgba(240, 68, 168, 0.13);
+}
+
+/* Panel izquierdo */
+
+.login-brand {
+    background: linear-gradient(145deg, #F47BD9, #F044A8);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 45px;
+}
+
+.login-brand h1 {
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.login-brand p {
+    font-size: 15px;
+    line-height: 1.7;
+    max-width: 300px;
+}
+
+.brand-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 20px;
+}
+
+/* Panel derecho */
+
+.login-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 55px;
+}
+
+.login-form-container h2 {
+    font-size: 29px;
+    margin-bottom: 10px;
+}
+
+.login-description {
+    color: #777777;
+    font-size: 14px;
+    margin-bottom: 35px;
+}
+
+/* Formulario */
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.login-form label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #e8dce5;
+    border-radius: 10px;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.login-form input:focus {
+    border-color: #F044A8;
+    box-shadow: 0 0 0 3px rgba(240, 68, 168, 0.12);
+}
+
+/* Botón */
+
+.login-form button {
+    margin-top: 22px;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #F044A8;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.login-form button:hover {
+    background: #d92d91;
+    transform: translateY(-2px);
+}
+
+/* Mensajes de error */
+
+.login-error {
+    padding: 12px;
+    margin-bottom: 15px;
+    background: #fff0f0;
+    color: #E34D50;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+/* Adaptación a celulares */
+
+@media (max-width: 700px) {
+
+    .login-container {
+        grid-template-columns: 1fr;
+    }
+
+    .login-brand {
+        padding: 35px 20px;
+    }
+
+    .login-brand h1 {
+        font-size: 27px;
+    }
+
+    .brand-icon {
+        width: 75px;
+        height: 75px;
+        font-size: 35px;
+        margin-bottom: 15px;
+    }
+
+    .login-form-container {
+        padding: 35px 25px;
+    }
+}
+
+
+/* Campo de contraseña */
+
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    padding-right: 48px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: #888;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+.toggle-password:hover {
+    color: #F044A8;
+}
+
+/* Corrección del botón mostrar/ocultar contraseña */
+
+.login-form .toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 36px;
+    height: 36px;
+
+    margin: 0;
+    padding: 0;
+
+    border: none;
+    border-radius: 6px;
+
+    background: transparent;
+    color: #888;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.login-form .toggle-password:hover {
+    background: #fff0f9;
+    color: #F044A8;
+    transform: translateY(-50%);
+}
+
+
+/* Ocultar el icono nativo del navegador */
+
+.password-container input::-ms-reveal,
+.password-container input::-ms-clear {
+    display: none;
+}

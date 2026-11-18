@@ -1,0 +1,350 @@
+
+/* =====================================
+   MINI LIBRERÍA EL PAPELITO
+   DASHBOARD ADMINISTRATIVO
+===================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #fff8fc;
+    color: #171717;
+}
+
+/* CONTENEDOR PRINCIPAL */
+
+.dashboard-container {
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* ENCABEZADO SUPERIOR */
+
+.topbar {
+    height: 84px;
+    background: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 35px;
+    border-radius: 0 0 16px 16px;
+    border-bottom: 1px solid #f4eaf1;
+}
+
+.topbar-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.topbar-brand strong {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.topbar-brand span {
+    font-size: 12px;
+    color: #88818a;
+}
+
+.topbar-user {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.notification-indicator {
+    width: 11px;
+    height: 11px;
+    background: #e34d50;
+    border-radius: 50%;
+}
+
+.user-information {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.user-information strong {
+    font-size: 12px;
+}
+
+.user-information span {
+    font-size: 11px;
+    color: #88818a;
+}
+
+.user-information a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.user-information a:hover {
+    color: #f044a8;
+}
+
+/* CONTENIDO DEL DASHBOARD */
+
+.dashboard-content {
+    padding: 22px 35px 40px;
+}
+
+/* BIENVENIDA */
+
+.welcome-section {
+    margin-bottom: 22px;
+}
+
+.welcome-section h1 {
+    font-size: 25px;
+    font-weight: 750;
+    margin-bottom: 7px;
+}
+
+.welcome-section p {
+    color: #85808a;
+    font-size: 13px;
+}
+
+/* INDICADORES */
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: #ffffff;
+    min-height: 100px;
+    padding: 16px;
+    border-radius: 15px;
+}
+
+.stat-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    margin-bottom: 3px;
+}
+
+.stat-icon.pink {
+    background: #ed78d6;
+}
+
+.stat-icon.red {
+    background: #e94d53;
+}
+
+.stat-icon.green {
+    background: #209365;
+}
+
+.stat-icon.orange {
+    background: #df8b1d;
+}
+
+.stat-card h2 {
+    font-size: 23px;
+    font-weight: 750;
+    margin-bottom: 4px;
+}
+
+.stat-card p {
+    color: #85808a;
+    font-size: 11px;
+}
+
+/* SECCIÓN CENTRAL */
+
+.dashboard-middle {
+    display: grid;
+    grid-template-columns: 1.9fr 1.1fr;
+    gap: 18px;
+    margin-bottom: 26px;
+}
+
+.dashboard-card {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 21px;
+}
+
+.dashboard-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+/* GRÁFICO DE VENTAS */
+
+.sales-card {
+    min-height: 265px;
+}
+
+.sales-chart {
+    height: 190px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    gap: 15px;
+    padding: 0 12px;
+}
+
+.chart-column {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex: 1;
+}
+
+.chart-bar {
+    width: 100%;
+    max-width: 32px;
+    background: #f3b5e7;
+    border-radius: 7px 7px 5px 5px;
+    min-height: 10px;
+}
+
+.chart-bar.highlight {
+    background: #ed78d6;
+}
+
+.chart-column span {
+    color: #85808a;
+    font-size: 10px;
+}
+
+/* ATENCIÓN DE INVENTARIO */
+
+.inventory-card {
+    min-height: 265px;
+}
+
+.inventory-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.inventory-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.inventory-item div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.inventory-item strong {
+    font-size: 11px;
+}
+
+.inventory-item div span {
+    color: #85808a;
+    font-size: 10px;
+}
+
+.stock-badge {
+    background: #ffe7e8;
+    color: #e34d50;
+    border-radius: 20px;
+    padding: 7px 12px;
+    font-size: 9px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* ACCESOS RÁPIDOS */
+
+.quick-access {
+    min-height: 140px;
+}
+
+.quick-access h3 {
+    margin-bottom: 22px;
+}
+
+.quick-access-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 25px;
+}
+
+.quick-access-buttons a {
+    background: #fae8f6;
+    color: #171717;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 14px 18px;
+    border-radius: 13px;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.quick-access-buttons a:hover {
+    background: #f5d3ec;
+    transform: translateY(-2px);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+    .dashboard-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-middle {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-access-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .topbar {
+        padding: 0 18px;
+    }
+
+    .topbar-user {
+        gap: 12px;
+    }
+
+    .dashboard-content {
+        padding: 22px 16px;
+    }
+
+    .welcome-section h1 {
+        font-size: 21px;
+    }
+
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-access-buttons {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .sales-chart {
+        gap: 8px;
+        padding: 0;
+    }
+}
