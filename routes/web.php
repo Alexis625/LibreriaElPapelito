@@ -6,6 +6,7 @@ require_once __DIR__ . '/../app/controllers/DashboardController.php';
 require_once __DIR__ . '/../app/controllers/ProductoController.php';
 require_once __DIR__ . '/../app/controllers/ProveedorController.php';
 require_once __DIR__ . '/../app/controllers/CompraController.php';
+require_once __DIR__ . '/../app/controllers/ClienteController.php';
 
 // Obtener la ruta solicitada
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -360,11 +361,80 @@ switch ($ruta) {
         $controlador = new CompraController($conexion);
         $controlador->obtenerDetalleAjax();
         break;
-        
+
     case '/compras/anular':
         $controlador = new CompraController($conexion);
         $controlador->anular();
         break;
+
+            // Listar clientes
+    case '/clientes':
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        $controlador = new ClienteController($conexion);
+        $controlador->index();
+        break;
+
+    // Registrar cliente
+    case '/clientes/crear':
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        $controlador = new ClienteController($conexion);
+        $resultado = $controlador->crear();
+
+        header('Location: /el_papelito/public/clientes?registro=' .
+            ($resultado ? 'exitoso' : 'error'));
+        exit;
+
+    // Consultar cliente
+    case '/clientes/editar':
+        if (!isset($_SESSION['usuario'])) {
+            http_response_code(401);
+            exit;
+        }
+
+        $controlador = new ClienteController($conexion);
+        header('Content-Type: application/json; charset=utf-8');
+
+        echo json_encode(
+            $controlador->editar(),
+            JSON_UNESCAPED_UNICODE
+        );
+        exit;
+
+    // Actualizar cliente
+    case '/clientes/actualizar':
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        $controlador = new ClienteController($conexion);
+        $resultado = $controlador->actualizar();
+
+        header('Location: /el_papelito/public/clientes?actualizacion=' .
+            ($resultado ? 'exitosa' : 'error'));
+        exit;
+
+    // Activar o desactivar cliente
+    case '/clientes/estado':
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        $controlador = new ClienteController($conexion);
+        $resultado = $controlador->cambiarEstado();
+
+        header('Location: /el_papelito/public/clientes?estado=' .
+            ($resultado ? 'exitoso' : 'error'));
+        exit;
 
     default:
         http_response_code(404);
