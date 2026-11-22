@@ -8,6 +8,7 @@ require_once __DIR__ . '/../app/controllers/ProveedorController.php';
 require_once __DIR__ . '/../app/controllers/CompraController.php';
 require_once __DIR__ . '/../app/controllers/ClienteController.php';
 require_once __DIR__ . '/../app/controllers/ReporteController.php';
+require_once __DIR__ . '/../app/controllers/VentaController.php';
 
 // Obtener la ruta solicitada
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -368,7 +369,85 @@ switch ($ruta) {
         $controlador->anular();
         break;
 
-            // Listar clientes
+    // =========================================
+    // MÓDULO DE VENTAS
+    // =========================================
+
+    // Listar ventas
+    case '/ventas':
+
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        $controlador = new VentaController($conexion);
+        $controlador->index();
+        break;
+
+
+    // Registrar venta
+    case '/ventas/crear':
+
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        $controlador = new VentaController($conexion);
+        $resultado = $controlador->crear();
+
+        if (!empty($resultado['exito'])) {
+            header('Location: /el_papelito/public/ventas?registro=exito');
+        } else {
+            $_SESSION['error_venta'] = $resultado['mensaje'] ?? 'No fue posible registrar la venta.';
+            header('Location: /el_papelito/public/ventas?registro=error');
+        }
+
+        exit;
+
+
+    // Consultar detalle de venta
+    case '/ventas/obtener-detalle':
+
+        if (!isset($_SESSION['usuario'])) {
+            http_response_code(401);
+            header('Content-Type: application/json; charset=utf-8');
+
+            echo json_encode([
+                'exito' => false,
+                'mensaje' => 'Debes iniciar sesión.'
+            ], JSON_UNESCAPED_UNICODE);
+
+            exit;
+        }
+
+        $controlador = new VentaController($conexion);
+        $controlador->obtenerDetalleAjax();
+        break;
+
+
+    // Anular venta
+    case '/ventas/anular':
+
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        $controlador = new VentaController($conexion);
+        $resultado = $controlador->anular();
+
+        if (!empty($resultado['exito'])) {
+            header('Location: /el_papelito/public/ventas?anulacion=exito');
+        } else {
+            $_SESSION['error_anulacion'] = $resultado['mensaje'] ?? 'No fue posible anular la venta.';
+            header('Location: /el_papelito/public/ventas?anulacion=error');
+        }
+
+        exit;
+
+    // Listar clientes
     case '/clientes':
         if (!isset($_SESSION['usuario'])) {
             header('Location: /el_papelito/public/login');
@@ -481,10 +560,6 @@ switch ($ruta) {
         $reporteController->exportar();
 
         exit;
-
-
-//
-
 
     default:
         http_response_code(404);
