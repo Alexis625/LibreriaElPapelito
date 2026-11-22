@@ -7,6 +7,7 @@ require_once __DIR__ . '/../app/controllers/ProductoController.php';
 require_once __DIR__ . '/../app/controllers/ProveedorController.php';
 require_once __DIR__ . '/../app/controllers/CompraController.php';
 require_once __DIR__ . '/../app/controllers/ClienteController.php';
+require_once __DIR__ . '/../app/controllers/ReporteController.php';
 
 // Obtener la ruta solicitada
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -435,6 +436,55 @@ switch ($ruta) {
         header('Location: /el_papelito/public/clientes?estado=' .
             ($resultado ? 'exitoso' : 'error'));
         exit;
+
+
+
+    case '/reportes':
+
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        if (($_SESSION['usuario']['rol'] ?? '') !== 'Administrador') {
+            header('Location: /el_papelito/public/dashboard');
+            exit;
+        }
+
+        $reporteController = new ReporteController($conexion);
+        $reporteController->index();
+
+        break;
+
+
+    case '/reportes/detalle':
+
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        $reporteController = new ReporteController($conexion);
+        $reporteController->detalle();
+
+        break;
+
+
+    case '/reportes/exportar':
+
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        $reporteController = new ReporteController($conexion);
+        $reporteController->exportar();
+
+        exit;
+
+
+//
+
 
     default:
         http_response_code(404);
