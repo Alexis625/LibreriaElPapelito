@@ -9,6 +9,7 @@ require_once __DIR__ . '/../app/controllers/CompraController.php';
 require_once __DIR__ . '/../app/controllers/ClienteController.php';
 require_once __DIR__ . '/../app/controllers/ReporteController.php';
 require_once __DIR__ . '/../app/controllers/VentaController.php';
+require_once __DIR__ . '/../app/controllers/ReservacionController.php';
 
 // Obtener la ruta solicitada
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -517,6 +518,67 @@ switch ($ruta) {
         exit;
 
 
+    // =========================================
+    // MÓDULO DE RESERVACIONES
+    // =========================================
+
+    // Listar reservaciones
+    case '/reservaciones':
+
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        $controlador = new ReservacionController($conexion);
+        $controlador->index();
+        break;
+
+
+    // Registrar reservación
+    case '/reservaciones/crear':
+
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        $controlador = new ReservacionController($conexion);
+        $controlador->crear();
+        break;
+
+
+    // Consultar detalle de reservación
+    case '/reservaciones/obtener-detalle':
+
+        if (!isset($_SESSION['usuario'])) {
+            http_response_code(401);
+            header('Content-Type: application/json; charset=utf-8');
+
+            echo json_encode([
+                'exito' => false,
+                'mensaje' => 'Debes iniciar sesión.'
+            ], JSON_UNESCAPED_UNICODE);
+
+            exit;
+        }
+
+        $controlador = new ReservacionController($conexion);
+        $controlador->obtenerDetalleAjax();
+        break;
+
+
+    // Actualizar estado de reservación
+    case '/reservaciones/actualizar-estado':
+
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        $controlador = new ReservacionController($conexion);
+        $controlador->actualizarEstado();
+        break;
 
     case '/reportes':
 
