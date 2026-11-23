@@ -10,6 +10,7 @@ require_once __DIR__ . '/../app/controllers/ClienteController.php';
 require_once __DIR__ . '/../app/controllers/ReporteController.php';
 require_once __DIR__ . '/../app/controllers/VentaController.php';
 require_once __DIR__ . '/../app/controllers/ReservacionController.php';
+require_once __DIR__ . '/../app/controllers/MovimientoInventarioController.php';
 
 // Obtener la ruta solicitada
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -580,6 +581,22 @@ switch ($ruta) {
         $controlador->actualizarEstado();
         break;
 
+    // =========================================
+// MÓDULO DE MOVIMIENTOS DE INVENTARIO
+// =========================================
+
+    case '/movimientos':
+
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        $controlador = new MovimientoInventarioController($conexion);
+        $controlador->index();
+
+        break;
+
     case '/reportes':
 
         if (!isset($_SESSION['usuario'])) {
@@ -597,7 +614,7 @@ switch ($ruta) {
 
         break;
 
-
+        
     case '/reportes/detalle':
 
         if (!isset($_SESSION['usuario'])) {

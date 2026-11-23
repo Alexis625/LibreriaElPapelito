@@ -1,0 +1,566 @@
+
+/* ==================================================
+   MINI LIBRERÍA EL PAPELITO
+   MÓDULO: MOVIMIENTOS DE INVENTARIO
+   ================================================== */
+
+/* ==================================================
+   CONFIGURACIÓN GENERAL
+   ================================================== */
+
+body {
+    background: #fff7fc;
+}
+
+.modulo-movimientos {
+    --rosa: #f044a8;
+    --rosa-hover: #d92e91;
+    --rosa-claro: #fff0f8;
+    --negro: #171717;
+    --gris: #777078;
+    --borde: #f0e5ed;
+    --blanco: #ffffff;
+
+    width: 100%;
+    min-width: 0;
+    padding: 18px 36px 30px;
+    color: var(--negro);
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+.modulo-movimientos *,
+.modulo-movimientos *::before,
+.modulo-movimientos *::after {
+    box-sizing: border-box;
+}
+
+/* ==================================================
+   ENCABEZADO
+   ================================================== */
+
+.movimientos-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.movimientos-etiqueta {
+    display: block;
+    margin: 0 0 5px;
+    padding: 0;
+    color: var(--rosa);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.movimientos-header h1 {
+    margin: 0;
+    color: var(--negro);
+    font-size: 28px;
+    line-height: 1.25;
+    font-weight: 700;
+}
+
+.movimientos-header p {
+    margin: 6px 0 0;
+    color: var(--gris);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* ==================================================
+   TARJETAS DE RESUMEN
+   ================================================== */
+
+.movimientos-resumen {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.resumen-movimiento {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 0;
+    min-height: 100px;
+    padding: 20px;
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 13px;
+    box-shadow: 0 3px 12px rgba(80, 40, 65, 0.045);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.resumen-movimiento:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(41, 35, 42, 0.08);
+}
+
+.resumen-icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    border-radius: 11px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.resumen-icono.rosa {
+    color: #f044a8;
+    background: #fff0f8;
+}
+
+.resumen-icono.verde {
+    color: #16834c;
+    background: #e3f7ed;
+}
+
+.resumen-icono.coral {
+    color: #ed716b;
+    background: #fde9e8;
+}
+
+.resumen-icono.amarillo {
+    color: #b98219;
+    background: #fff4d8;
+}
+
+.resumen-movimiento span {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--gris);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.resumen-movimiento strong {
+    display: block;
+    color: var(--negro);
+    font-size: 24px;
+    font-weight: 800;
+}
+
+/* ==================================================
+   FILTROS
+   ================================================== */
+
+.movimientos-filtros {
+    padding: 20px;
+    margin-bottom: 25px;
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 13px;
+    box-shadow: 0 3px 12px rgba(80, 40, 65, 0.045);
+}
+
+.movimientos-filtros form {
+    display: grid;
+    grid-template-columns: minmax(220px, 2fr) repeat(3, minmax(130px, 1fr)) auto;
+    align-items: end;
+    gap: 14px;
+}
+
+.movimientos-filtros .campo-filtro {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 7px;
+}
+
+.movimientos-filtros .campo-filtro label {
+    display: block;
+    margin: 0;
+    color: #555;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.movimientos-filtros .campo-filtro input,
+.movimientos-filtros .campo-filtro select {
+    width: 100%;
+    min-width: 0;
+    height: 42px;
+    padding: 10px 12px;
+    border: 1px solid #e8dce5;
+    border-radius: 9px;
+    outline: none;
+    background: var(--blanco);
+    color: #333;
+    font-family: inherit;
+    font-size: 13px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.movimientos-filtros .campo-filtro input:focus,
+.movimientos-filtros .campo-filtro select:focus {
+    border-color: var(--rosa);
+    box-shadow: 0 0 0 3px rgba(240, 68, 168, 0.10);
+}
+
+.movimientos-filtros input::placeholder {
+    color: #aaa2aa;
+}
+
+/* Botones de filtros */
+
+.movimientos-filtros .acciones-filtro {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.movimientos-filtros .btn-filtrar,
+.movimientos-filtros .btn-limpiar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    padding: 0 16px;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.movimientos-filtros .btn-filtrar {
+    border: none;
+    background: var(--rosa);
+    color: var(--blanco);
+}
+
+.movimientos-filtros .btn-filtrar:hover {
+    background: var(--rosa-hover);
+}
+
+.movimientos-filtros .btn-limpiar {
+    border: 1px solid #e8dce5;
+    background: var(--blanco);
+    color: #555;
+}
+
+.movimientos-filtros .btn-limpiar:hover {
+    border-color: var(--rosa);
+    color: var(--rosa);
+    background: var(--rosa-claro);
+}
+
+/* ==================================================
+   HISTORIAL DE MOVIMIENTOS
+   ================================================== */
+
+.movimientos-tabla-contenedor {
+    width: 100%;
+    overflow: hidden;
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 13px;
+    box-shadow: 0 3px 12px rgba(80, 40, 65, 0.045);
+}
+
+/* Encabezado del historial */
+
+.movimientos-tabla-contenedor .tabla-encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    min-height: 86px;
+    padding: 20px 23px;
+    background: var(--blanco);
+    border-bottom: 1px solid var(--borde);
+}
+
+.movimientos-tabla-contenedor .tabla-encabezado h2 {
+    margin: 0;
+    color: var(--negro);
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.movimientos-tabla-contenedor .tabla-encabezado p {
+    margin: 5px 0 0;
+    color: #888;
+    font-size: 13px;
+}
+
+/* Contador de registros */
+
+.movimientos-tabla-contenedor .tabla-total {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 13px;
+    border: none;
+    border-radius: 20px;
+    background: var(--rosa-claro);
+    color: var(--rosa);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+/* ==================================================
+   TABLA
+   ================================================== */
+
+.movimientos-tabla-contenedor .tabla-scroll {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.movimientos-tabla-contenedor .tabla-movimientos {
+    width: 100%;
+    min-width: 850px;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.movimientos-tabla-contenedor .tabla-movimientos thead {
+    background: var(--rosa-claro);
+}
+
+.movimientos-tabla-contenedor .tabla-movimientos th {
+    padding: 16px 14px;
+    background: var(--rosa-claro);
+    color: #5a3b50;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border-bottom: 1px solid #f2dce9;
+}
+
+.movimientos-tabla-contenedor .tabla-movimientos td {
+    padding: 16px 14px;
+    background: var(--blanco);
+    color: #444;
+    font-size: 13px;
+    border-bottom: 1px solid #f2e8ef;
+    vertical-align: middle;
+}
+
+.movimientos-tabla-contenedor .tabla-movimientos tbody tr {
+    transition: background 0.2s;
+}
+
+.movimientos-tabla-contenedor .tabla-movimientos tbody tr:hover td {
+    background: #fffafd;
+}
+
+.movimientos-tabla-contenedor .tabla-movimientos tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ==================================================
+   TIPOS DE MOVIMIENTO
+   ================================================== */
+
+.tipo-movimiento {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.tipo-movimiento.entrada {
+    color: #16834c;
+    background: #e3f7ed;
+}
+
+.tipo-movimiento.salida {
+    color: #d34b4b;
+    background: #fff0f0;
+}
+
+.tipo-movimiento.ajuste-entrada {
+    color: #1767a4;
+    background: #e5f2ff;
+}
+
+.tipo-movimiento.ajuste-salida {
+    color: #98630b;
+    background: #fff3d6;
+}
+
+/* ==================================================
+   TEXTOS Y OBSERVACIONES
+   ================================================== */
+
+.observaciones-celda {
+    max-width: 200px;
+    overflow-wrap: break-word;
+}
+
+.tabla-movimientos .texto-secundario {
+    color: var(--gris);
+    font-size: 12px;
+}
+
+.tabla-movimientos .cantidad-positiva {
+    color: #16834c;
+    font-weight: 700;
+}
+
+.tabla-movimientos .cantidad-negativa {
+    color: #d34b4b;
+    font-weight: 700;
+}
+
+/* ==================================================
+   TABLA SIN RESULTADOS
+   ================================================== */
+
+.movimientos-tabla-contenedor .tabla-vacia,
+.movimientos-tabla-contenedor .sin-resultados {
+    padding: 45px 20px !important;
+    color: var(--gris);
+    font-size: 14px;
+    text-align: center;
+    white-space: normal;
+}
+
+.tabla-vacia strong {
+    display: block;
+    color: var(--negro);
+    font-size: 14px;
+}
+
+.tabla-vacia p {
+    margin: 7px 0 0;
+    color: var(--gris);
+    font-size: 12px;
+}
+
+/* ==================================================
+   PAGINACIÓN
+   ================================================== */
+
+.movimientos-paginacion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 16px 20px;
+    background: var(--blanco);
+    border-top: 1px solid var(--borde);
+    color: var(--gris);
+    font-size: 12px;
+}
+
+.movimientos-paginacion p,
+.movimientos-paginacion span {
+    margin: 0;
+}
+
+.paginacion-botones {
+    display: flex;
+    gap: 7px;
+}
+
+.paginacion-botones a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 13px;
+    border: 1px solid #eee5eb;
+    border-radius: 7px;
+    background: var(--blanco);
+    color: #444;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.paginacion-botones a:hover {
+    border-color: var(--rosa);
+    color: var(--rosa);
+    background: var(--rosa-claro);
+}
+
+/* ==================================================
+   RESPONSIVE
+   ================================================== */
+
+@media (max-width: 1200px) {
+    .movimientos-filtros form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .movimientos-filtros .acciones-filtro {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 1100px) {
+    .movimientos-resumen {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .modulo-movimientos {
+        padding: 16px;
+    }
+
+    .movimientos-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .movimientos-header h1 {
+        font-size: 23px;
+    }
+
+    .movimientos-resumen {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .movimientos-filtros {
+        padding: 16px;
+    }
+
+    .movimientos-filtros form {
+        grid-template-columns: 1fr;
+    }
+
+    .movimientos-filtros .acciones-filtro {
+        grid-column: auto;
+        width: 100%;
+    }
+
+    .movimientos-filtros .acciones-filtro > * {
+        flex: 1;
+    }
+
+    .movimientos-tabla-contenedor .tabla-encabezado {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .movimientos-paginacion {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
