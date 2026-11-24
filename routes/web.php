@@ -11,6 +11,7 @@ require_once __DIR__ . '/../app/controllers/ReporteController.php';
 require_once __DIR__ . '/../app/controllers/VentaController.php';
 require_once __DIR__ . '/../app/controllers/ReservacionController.php';
 require_once __DIR__ . '/../app/controllers/MovimientoInventarioController.php';
+require_once __DIR__ . '/../app/controllers/UsuarioController.php';
 
 // Obtener la ruta solicitada
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -614,7 +615,7 @@ switch ($ruta) {
 
         break;
 
-        
+
     case '/reportes/detalle':
 
         if (!isset($_SESSION['usuario'])) {
@@ -639,6 +640,128 @@ switch ($ruta) {
         $reporteController->exportar();
 
         exit;
+
+
+    // =========================================
+    // MÓDULO DE USUARIOS
+    // =========================================
+
+    // Listar usuarios
+    case '/usuarios':
+
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        if (($_SESSION['usuario']['rol'] ?? '') !== 'Administrador') {
+            header('Location: /el_papelito/public/dashboard');
+            exit;
+        }
+
+        $controlador = new UsuarioController($conexion);
+        $controlador->index();
+
+        break;
+
+
+    // Registrar usuario
+    case '/usuarios/crear':
+
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        if (($_SESSION['usuario']['rol'] ?? '') !== 'Administrador') {
+            header('Location: /el_papelito/public/dashboard');
+            exit;
+        }
+
+        $controlador = new UsuarioController($conexion);
+        $resultado = $controlador->crear();
+
+        header('Location: /el_papelito/public/usuarios?registro=' .
+            ($resultado ? 'exitoso' : 'error'));
+
+        exit;
+
+
+    // Consultar usuario para editar
+    case '/usuarios/editar':
+
+        if (!isset($_SESSION['usuario'])) {
+            http_response_code(401);
+            exit;
+        }
+
+        if (($_SESSION['usuario']['rol'] ?? '') !== 'Administrador') {
+            http_response_code(403);
+            exit;
+        }
+
+        header('Content-Type: application/json; charset=utf-8');
+
+        $controlador = new UsuarioController($conexion);
+        $usuario = $controlador->editar();
+
+        if ($usuario) {
+            echo json_encode($usuario, JSON_UNESCAPED_UNICODE);
+        } else {
+            http_response_code(404);
+
+            echo json_encode([
+                'exito' => false,
+                'mensaje' => 'Usuario no encontrado.'
+            ], JSON_UNESCAPED_UNICODE);
+        }
+
+        exit;
+
+
+    // Actualizar usuario
+    case '/usuarios/actualizar':
+
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        if (($_SESSION['usuario']['rol'] ?? '') !== 'Administrador') {
+            header('Location: /el_papelito/public/dashboard');
+            exit;
+        }
+
+        $controlador = new UsuarioController($conexion);
+        $resultado = $controlador->actualizar();
+
+        header('Location: /el_papelito/public/usuarios?actualizacion=' .
+            ($resultado ? 'exitosa' : 'error'));
+
+        exit;
+
+
+    // Activar o desactivar usuario
+    case '/usuarios/estado':
+
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: /el_papelito/public/login');
+            exit;
+        }
+
+        if (($_SESSION['usuario']['rol'] ?? '') !== 'Administrador') {
+            header('Location: /el_papelito/public/dashboard');
+            exit;
+        }
+
+        $controlador = new UsuarioController($conexion);
+        $resultado = $controlador->cambiarEstado();
+
+        header('Location: /el_papelito/public/usuarios?estado=' .
+            ($resultado ? 'exitoso' : 'error'));
+
+        exit;
+
 
     default:
         http_response_code(404);
