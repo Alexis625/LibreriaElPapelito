@@ -4,7 +4,8 @@
 class HomeController {
 
     public function index() {
-        require_once __DIR__ . '/../views/cliente/inicio.php';
+        header('Location: /el_papelito/public/login');
+        exit;
     }
 
 }
