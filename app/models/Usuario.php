@@ -272,4 +272,66 @@ class Usuario
             ':id_usuario' => $idUsuario
         ]);
     }
+
+
+    // ==========================================
+    // COMPROBAR DATOS DUPLICADOS
+    // ==========================================
+
+    // Comprobar si el nombre de usuario ya existe
+    public function existeNombreUsuario($nombreUsuario, $idExcluir = null)
+    {
+        $sql = "SELECT COUNT(*)
+                FROM usuarios
+                WHERE nombre_usuario = :nombre_usuario";
+
+        if ($idExcluir !== null) {
+            $sql .= " AND id_usuario != :id_usuario";
+        }
+
+        $consulta = $this->conexion->prepare($sql);
+
+        $parametros = [
+            ':nombre_usuario' => $nombreUsuario
+        ];
+
+        if ($idExcluir !== null) {
+            $parametros[':id_usuario'] = $idExcluir;
+        }
+
+        $consulta->execute($parametros);
+
+        return (int) $consulta->fetchColumn() > 0;
+    }
+
+    // Comprobar si el correo ya existe
+    public function existeCorreo($correo, $idExcluir = null)
+    {
+        if ($correo === '') {
+            return false;
+        }
+
+        $sql = "SELECT COUNT(*)
+                FROM usuarios
+                WHERE correo = :correo";
+
+        if ($idExcluir !== null) {
+            $sql .= " AND id_usuario != :id_usuario";
+        }
+
+        $consulta = $this->conexion->prepare($sql);
+
+        $parametros = [
+            ':correo' => $correo
+        ];
+
+        if ($idExcluir !== null) {
+            $parametros[':id_usuario'] = $idExcluir;
+        }
+
+        $consulta->execute($parametros);
+
+        return (int) $consulta->fetchColumn() > 0;
+    }
+
 }

@@ -18,7 +18,6 @@ class UsuarioController
     // VALIDACIONES
     // ==========================================
 
-    // Validar que el nombre contenga solamente letras
     private function validarNombreCompleto($nombre)
     {
         return preg_match(
@@ -27,7 +26,6 @@ class UsuarioController
         ) === 1;
     }
 
-    // Generar nombre de usuario: apellido.nombre
     private function generarNombreUsuario($nombreCompleto)
     {
         $palabras = preg_split(
@@ -41,10 +39,6 @@ class UsuarioController
             return false;
         }
 
-        // Dos nombres y dos apellidos:
-        // primer nombre = posición 0
-        // primer apellido = posición 2
-
         $primerNombre = $palabras[0];
 
         $primerApellido = count($palabras) >= 3
@@ -54,7 +48,6 @@ class UsuarioController
         return $primerApellido . '.' . $primerNombre;
     }
 
-    // Validar que el usuario enviado corresponda al nombre
     private function validarNombreUsuario($nombreCompleto, $nombreUsuario)
     {
         $usuarioEsperado = $this->generarNombreUsuario(
@@ -69,11 +62,51 @@ class UsuarioController
             === $usuarioEsperado;
     }
 
-    // Validar correo electrónico
     private function validarCorreo($correo)
     {
         return $correo === ''
             || filter_var($correo, FILTER_VALIDATE_EMAIL) !== false;
+    }
+
+    // ==========================================
+    // VALIDAR DUPLICADOS
+    // ==========================================
+
+    private function validarDatosDuplicados($datos, $idExcluir = null)
+    {
+        $nombreUsuarioExiste = $this->usuario->existeNombreUsuario(
+            $datos['nombre_usuario'],
+            $idExcluir
+        );
+
+        $correoExiste = $datos['correo'] !== ''
+            && $this->usuario->existeCorreo(
+                $datos['correo'],
+                $idExcluir
+            );
+
+        if ($nombreUsuarioExiste && $correoExiste) {
+            $_SESSION['mensaje_usuario'] =
+                'El nombre de usuario y el correo electrónico ya están registrados.';
+
+            return false;
+        }
+
+        if ($nombreUsuarioExiste) {
+            $_SESSION['mensaje_usuario'] =
+                'El nombre de usuario ya está registrado.';
+
+            return false;
+        }
+
+        if ($correoExiste) {
+            $_SESSION['mensaje_usuario'] =
+                'El correo electrónico ya está registrado.';
+
+            return false;
+        }
+
+        return true;
     }
 
     // ==========================================
@@ -112,6 +145,8 @@ class UsuarioController
 
     public function crear()
     {
+        unset($_SESSION['mensaje_usuario']);
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             return false;
         }
@@ -124,7 +159,6 @@ class UsuarioController
             'password' => $_POST['password'] ?? ''
         ];
 
-        // Campos obligatorios
         foreach ([
             'id_rol',
             'nombre_completo',
@@ -136,12 +170,10 @@ class UsuarioController
             }
         }
 
-        // Validar nombre completo
         if (!$this->validarNombreCompleto($datos['nombre_completo'])) {
             return false;
         }
 
-        // Validar nombre de usuario automático
         if (!$this->validarNombreUsuario(
             $datos['nombre_completo'],
             $datos['nombre_usuario']
@@ -149,7 +181,6 @@ class UsuarioController
             return false;
         }
 
-        // Validar rol
         $idRol = filter_var(
             $datos['id_rol'],
             FILTER_VALIDATE_INT
@@ -166,13 +197,16 @@ class UsuarioController
             return false;
         }
 
-        // Validar correo
         if (!$this->validarCorreo($datos['correo'])) {
             return false;
         }
 
-        // Validar contraseña
         if (strlen($datos['password']) < 8) {
+            return false;
+        }
+
+        // Comprobar si el usuario o correo ya existen
+        if (!$this->validarDatosDuplicados($datos)) {
             return false;
         }
 
@@ -204,6 +238,8 @@ class UsuarioController
 
     public function actualizar()
     {
+        unset($_SESSION['mensaje_usuario']);
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             return false;
         }
@@ -234,7 +270,6 @@ class UsuarioController
             'password' => $_POST['password'] ?? ''
         ];
 
-        // Campos obligatorios
         foreach ([
             'id_rol',
             'nombre_completo',
@@ -245,20 +280,21 @@ class UsuarioController
             }
         }
 
-        // Validar nombre completo
         if (!$this->validarNombreCompleto($datos['nombre_completo'])) {
             return false;
         }
 
-        // Validar nombre de usuario automático
-        if (!$this->validarNombreUsuario(
-            $datos['nombre_completo'],
-            $datos['nombre_usuario']
-        )) {
-            return false;
-        }
+        // Validar nombre de usuario solamente si cambia el nombre completo
+if (
+    $datos['nombre_completo'] !== $usuarioExistente['nombre_completo'] &&
+    !$this->validarNombreUsuario(
+        $datos['nombre_completo'],
+        $datos['nombre_usuario']
+    )
+) {
+    return false;
+}
 
-        // Validar rol
         $idRol = filter_var(
             $datos['id_rol'],
             FILTER_VALIDATE_INT
@@ -275,16 +311,19 @@ class UsuarioController
             return false;
         }
 
-        // Validar correo
         if (!$this->validarCorreo($datos['correo'])) {
             return false;
         }
 
-        // Validar contraseña nueva, si se proporciona
         if (
             $datos['password'] !== '' &&
             strlen($datos['password']) < 8
         ) {
+            return false;
+        }
+
+        // Excluir al propio usuario de la comprobación
+        if (!$this->validarDatosDuplicados($datos, $idUsuario)) {
             return false;
         }
 

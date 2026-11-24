@@ -6,6 +6,10 @@ $escapar = function ($valor) {
     return htmlspecialchars((string) ($valor ?? ''), ENT_QUOTES, 'UTF-8');
 };
 
+$mensajeUsuario = $_SESSION['mensaje_usuario'] ?? null;
+
+unset($_SESSION['mensaje_usuario']);
+
 ?>
 
 <!DOCTYPE html>
@@ -91,9 +95,10 @@ $escapar = function ($valor) {
             <?php else: ?>
 
                 <div class="mensaje mensaje-error">
-                    No se pudo registrar el usuario. Verifica los datos ingresados.
-                    Comprueba también que el nombre de usuario y correo no estén registrados.
-                </div>
+    <?= $mensajeUsuario
+        ? $escapar($mensajeUsuario)
+        : 'No se pudo registrar el usuario. Verifica los datos ingresados.' ?>
+</div>
 
             <?php endif; ?>
 
@@ -111,8 +116,10 @@ $escapar = function ($valor) {
             <?php else: ?>
 
                 <div class="mensaje mensaje-error">
-                    No se pudo actualizar el usuario. Verifica los datos ingresados.
-                </div>
+    <?= $mensajeUsuario
+        ? $escapar($mensajeUsuario)
+        : 'No se pudo actualizar el usuario. Verifica los datos ingresados.' ?>
+</div>
 
             <?php endif; ?>
 
