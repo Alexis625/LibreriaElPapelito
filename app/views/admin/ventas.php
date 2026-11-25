@@ -17,10 +17,20 @@ $mensajeAnulacion = $_GET['anulacion'] ?? '';
 
 ?>
 
+<link rel="stylesheet" href="/el_papelito/public/assets/css/layouts.css">
 <link rel="stylesheet" href="/el_papelito/public/assets/css/proveedores.css">
 <link rel="stylesheet" href="/el_papelito/public/assets/css/ventas.css">
 
-<div class="contenido-proveedores contenido-ventas">
+<div class="app-layout">
+    <?php
+    $moduloActual = 'ventas';
+    require __DIR__ . '/../layouts/sidebar.php';
+    ?>
+
+    <div class="main-area">
+        <?php require __DIR__ . '/../layouts/topbar.php'; ?>
+
+        <main class="contenido-proveedores contenido-ventas">
 
     <div class="encabezado">
         <div>
@@ -233,8 +243,9 @@ $mensajeAnulacion = $_GET['anulacion'] ?? '';
 
     <?php endif; ?>
 
+        </main>
+    </div>
 </div>
-
 
 <!-- MODAL: REGISTRAR VENTA -->
 

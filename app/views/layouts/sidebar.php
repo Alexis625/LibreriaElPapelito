@@ -11,7 +11,7 @@ $opcionesMenu = [
     ['nombre' => 'Productos', 'ruta' => '/productos', 'modulo' => 'productos'],
     ['nombre' => 'Compras', 'ruta' => '/compras', 'modulo' => 'compras'],
     ['nombre' => 'Ventas', 'ruta' => '/ventas', 'modulo' => 'ventas'],
-    ['nombre' => 'Reservas', 'ruta' => '/reservas', 'modulo' => 'reservas'],
+    ['nombre' => 'Reservas', 'ruta' => '/reservaciones', 'modulo' => 'reservaciones'],
     ['nombre' => 'Proveedores', 'ruta' => '/proveedores', 'modulo' => 'proveedores'],
     ['nombre' => 'Clientes', 'ruta' => '/clientes', 'modulo' => 'clientes'],
     ['nombre' => 'Usuarios', 'ruta' => '/usuarios', 'modulo' => 'usuarios'],

@@ -10,11 +10,23 @@ $titulo = "Proveedores";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $titulo ?> | El Papelito</title>
 
-    <link rel="stylesheet" href="/el_papelito/public/assets/css/proveedores.css">
+    <link rel="stylesheet" href="/el_papelito/public/assets/css/layouts.css">
+<link rel="stylesheet" href="/el_papelito/public/assets/css/proveedores.css">
 </head>
 <body>
 
-    <main class="contenido-proveedores">
+    <div class="app-layout">
+
+        <?php
+        $moduloActual = 'proveedores';
+        require __DIR__ . '/../layouts/sidebar.php';
+        ?>
+
+        <div class="main-area">
+
+            <?php require __DIR__ . '/../layouts/topbar.php'; ?>
+
+            <main class="contenido-proveedores">
 
         <header class="encabezado">
             <div>
@@ -223,7 +235,14 @@ $titulo = "Proveedores";
 
         </section>
 
-    </main>
+                </main>
+
+        </div>
+
+    </div>
+
+
+    <!-- Modal para registrar y editar proveedores -->
 
 
 <!-- Modal para registrar y editar proveedores -->

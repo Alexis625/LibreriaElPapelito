@@ -180,10 +180,10 @@ $nombre = $_SESSION['usuario']['nombre_completo'] ?? 'Administrador';
                     <h3>Accesos rápidos</h3>
 
                     <div class="quick-access-buttons">
-                        <a href="#">Registrar venta</a>
+                        <a href="/el_papelito/public/ventas">Registrar venta</a>
                         <a href="/el_papelito/public/productos">Agregar producto</a>
-                        <a href="#">Nueva compra</a>
-                        <a href="#">Ver reservas</a>
+                        <a href="/el_papelito/public/compras">Nueva compra</a>
+                        <a href="/el_papelito/public/reservaciones">Ver reservas</a>
                     </div>
 
                 </section>

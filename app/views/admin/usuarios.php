@@ -21,12 +21,22 @@ unset($_SESSION['mensaje_usuario']);
 
     <title><?= $titulo ?> | Mini Librería El Papelito</title>
 
-    <link rel="stylesheet" href="/el_papelito/public/assets/css/usuarios.css">
+    <link rel="stylesheet" href="/el_papelito/public/assets/css/layouts.css">
+<link rel="stylesheet" href="/el_papelito/public/assets/css/usuarios.css">
 </head>
 
 <body>
 
-    <main class="usuarios-container">
+    <div class="app-layout">
+        <?php
+        $moduloActual = 'usuarios';
+        require __DIR__ . '/../layouts/sidebar.php';
+        ?>
+
+        <div class="main-area">
+            <?php require __DIR__ . '/../layouts/topbar.php'; ?>
+
+            <main class="usuarios-container">
 
         <!-- ENCABEZADO -->
         <header class="usuarios-header">
@@ -278,9 +288,13 @@ unset($_SESSION['mensaje_usuario']);
 
             </div>
 
-        </section>
+                </section>
 
-    </main>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL: REGISTRAR Y EDITAR USUARIO -->
 
 
     <!-- MODAL: REGISTRAR Y EDITAR USUARIO -->

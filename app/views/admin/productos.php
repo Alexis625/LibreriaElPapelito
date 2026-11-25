@@ -5,12 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos | Mini Librería El Papelito</title>
-    <link rel="stylesheet" href="/el_papelito/public/assets/css/productos.css">
+    <link rel="stylesheet" href="/el_papelito/public/assets/css/layouts.css">
+<link rel="stylesheet" href="/el_papelito/public/assets/css/productos.css">
 </head>
 
 <body>
 
-    <main class="productos-container">
+    <div class="app-layout">
+
+        <?php
+        $moduloActual = 'productos';
+        require __DIR__ . '/../layouts/sidebar.php';
+        ?>
+
+        <div class="main-area">
+
+            <?php require __DIR__ . '/../layouts/topbar.php'; ?>
+
+            <main class="productos-container">
 
         <!-- Encabezado -->
         <header class="productos-header">
@@ -244,7 +256,14 @@
 
         </section>
 
-    </main>
+                </main>
+
+        </div>
+
+    </div>
+
+
+    <!-- Modal: nuevo producto -->
 
 
     <!-- Modal: nuevo producto -->

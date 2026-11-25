@@ -19,6 +19,18 @@
     box-sizing: border-box;
 }
 
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow-x: hidden;
+}
+
 /* =========================================
    ESTRUCTURA GENERAL - COMPUTADORA
 ========================================= */
@@ -31,8 +43,8 @@
 }
 
 .main-area {
-    min-width: 0;
     width: 100%;
+    min-width: 0;
 }
 
 /* =========================================
@@ -40,17 +52,18 @@
 ========================================= */
 
 .sidebar {
-    background: var(--white);
-    border-right: 1px solid #f2eaf0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding: 18px 15px 22px;
     position: sticky;
     top: 0;
+    display: flex;
+    flex-direction: column;
+    width: auto;
     height: 100vh;
-    overflow-y: auto;
+    min-height: 100vh;
+    padding: 18px 15px 22px;
     overflow-x: hidden;
+    overflow-y: auto;
+    background: var(--white);
+    border-right: 1px solid #f2eaf0;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
@@ -60,8 +73,6 @@
     display: none;
 }
 
-/* Encabezado */
-
 .sidebar-header {
     display: flex;
     align-items: center;
@@ -70,25 +81,25 @@
 }
 
 .sidebar-brand {
-    min-height: 72px;
     display: flex;
+    flex: 1;
     align-items: center;
     gap: 13px;
-    padding: 0 12px 14px;
+    min-width: 0;
+    min-height: 72px;
     margin-bottom: 20px;
-    border-bottom: 1px solid #f7f0f5;
+    padding: 0 12px 14px;
     color: var(--text);
     text-decoration: none;
-    flex: 1;
-    min-width: 0;
+    border-bottom: 1px solid #f7f0f5;
 }
 
 .sidebar-brand img {
     width: 48px;
     height: 48px;
+    flex-shrink: 0;
     object-fit: contain;
     border-radius: 8px;
-    flex-shrink: 0;
 }
 
 .sidebar-brand span {
@@ -108,7 +119,9 @@
     letter-spacing: .1px;
 }
 
-/* Botón del logo */
+/* =========================================
+   BOTÓN DEL LOGO
+========================================= */
 
 .sidebar-toggle-input {
     display: none;
@@ -116,12 +129,12 @@
 
 .sidebar-toggle-button {
     display: none;
-    width: 42px;
-    height: 42px;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    width: 42px;
+    height: 42px;
     flex-shrink: 0;
+    cursor: pointer;
     background: transparent;
     border: none;
 }
@@ -144,10 +157,10 @@
 
 .sidebar-section-label {
     display: block;
+    margin: 0 5px 12px;
+    color: var(--muted);
     font-size: 9px;
     font-weight: 800;
-    color: var(--muted);
-    margin: 0 5px 12px;
 }
 
 .sidebar-nav {
@@ -160,30 +173,30 @@
     display: flex;
     align-items: center;
     min-height: 43px;
+    margin-left: -7px;
     padding: 0 17px;
-    border-radius: 0 13px 13px 0;
     color: #68616b;
     font-size: 14px;
-    border-left: 4px solid transparent;
-    margin-left: -7px;
     text-decoration: none;
+    border-left: 4px solid transparent;
+    border-radius: 0 13px 13px 0;
     transition: .18s;
 }
 
 .sidebar-nav a:hover {
-    background: #fff7fc;
     color: #242024;
+    background: #fff7fc;
 }
 
 .sidebar-nav a.active {
-    background: #fbe7f7;
-    border-left-color: var(--pink);
     color: var(--text);
     font-weight: 700;
+    background: #fbe7f7;
+    border-left-color: var(--pink);
 }
 
 /* =========================================
-   INFORMACIÓN DE SESIÓN
+   INFORMACIÓN DE SESIÓN DEL SIDEBAR
 ========================================= */
 
 .sidebar-session {
@@ -195,21 +208,21 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    padding-left: 1px;
     min-width: 0;
+    padding-left: 1px;
 }
 
 .avatar-letter {
-    width: 39px;
-    height: 39px;
     display: grid;
     place-items: center;
-    border-radius: 12px;
-    background: var(--pink);
+    width: 39px;
+    height: 39px;
+    flex-shrink: 0;
+    color: #2a1828;
     font-size: 17px;
     font-weight: 800;
-    color: #2a1828;
-    flex-shrink: 0;
+    background: var(--pink);
+    border-radius: 12px;
 }
 
 .session-user > span:last-child {
@@ -220,20 +233,20 @@
 }
 
 .session-user strong {
-    font-size: 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     max-width: 160px;
+    overflow: hidden;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .session-user small {
-    font-size: 10px;
-    color: var(--muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     max-width: 160px;
+    overflow: hidden;
+    color: var(--muted);
+    font-size: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* =========================================
@@ -241,15 +254,15 @@
 ========================================= */
 
 .topbar {
-    min-height: 84px;
-    background: var(--white);
-    border-radius: 0 0 16px 16px;
-    border-bottom: 1px solid #f4eaf1;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 20px;
+    min-height: 84px;
     padding: 14px 38px;
+    background: var(--white);
+    border-bottom: 1px solid #f4eaf1;
+    border-radius: 0 0 16px 16px;
 }
 
 .topbar-brand {
@@ -264,8 +277,8 @@
 }
 
 .topbar-brand span {
-    font-size: 11px;
     color: var(--muted);
+    font-size: 11px;
 }
 
 .topbar-user {
@@ -283,13 +296,13 @@
 }
 
 .topbar-user-info strong {
-    font-size: 12px;
     overflow-wrap: anywhere;
+    font-size: 12px;
 }
 
 .topbar-user-info span {
-    font-size: 11px;
     color: var(--muted);
+    font-size: 11px;
 }
 
 .topbar-user-info a {
@@ -304,12 +317,10 @@
 .notification-dot {
     width: 11px;
     height: 11px;
+    flex-shrink: 0;
     background: #e34d50;
     border-radius: 50%;
-    flex-shrink: 0;
 }
-
-/* Inicial oculta en computadora */
 
 .topbar-avatar {
     display: none;
@@ -326,13 +337,13 @@
     }
 
     .sidebar {
-        padding-left: 12px;
         padding-right: 12px;
+        padding-left: 12px;
     }
 
     .sidebar-brand {
-        padding-left: 4px;
         gap: 9px;
+        padding-left: 4px;
     }
 
     .sidebar-brand strong {
@@ -345,8 +356,8 @@
     }
 
     .topbar {
-        padding-left: 22px;
         padding-right: 22px;
+        padding-left: 22px;
     }
 
     .topbar-user {
@@ -356,66 +367,60 @@
 
 /* =========================================
    TELÉFONOS
+   BARRA SUPERIOR UNIFICADA
 ========================================= */
 
 @media (max-width: 760px) {
 
-    /* Una sola barra horizontal */
-
     .app-layout {
-        display: grid;
-        grid-template-columns: 65px minmax(0, 1fr);
-        grid-template-rows: 68px auto;
-        align-items: start;
+        display: block;
+        position: relative;
         width: 100%;
         min-height: 100vh;
-        position: relative;
+        overflow-x: clip;
     }
 
-    /* LADO IZQUIERDO: LOGO Y MENÚ */
+    /* LOGO Y BOTÓN DEL MENÚ */
 
     .sidebar {
-        grid-column: 1;
-        grid-row: 1;
-        position: relative;
-        top: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 30;
+        display: block;
         width: 65px;
         height: 68px;
         min-height: 68px;
+        margin: 0;
         padding: 10px 8px;
-        display: block;
         overflow: visible;
-        border: none;
         background: var(--white);
-        z-index: 30;
+        border: none;
+        border-bottom: 1px solid var(--line);
     }
 
     .sidebar-header {
-        height: 48px;
-        width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 100%;
+        height: 48px;
     }
-
-    /* Ocultar logo y texto original */
 
     .sidebar-brand {
         display: none !important;
     }
 
-    /* El logo funciona como botón */
-
     .sidebar-toggle-button {
         display: flex !important;
         width: 48px;
         height: 48px;
-        padding: 3px;
         margin: 0;
+        padding: 3px;
+        cursor: pointer;
         background: transparent;
         border: none;
         border-radius: 10px;
-        cursor: pointer;
     }
 
     .sidebar-toggle-button img {
@@ -425,32 +430,30 @@
         object-fit: contain;
     }
 
-    /* Menú desplegable */
+    /* MENÚ DESPLEGABLE */
 
     .sidebar-content {
-        display: none;
         position: absolute;
         top: 68px;
         left: 0;
+        z-index: 40;
+        display: none;
         width: min(320px, calc(100vw - 20px));
         max-height: calc(100vh - 85px);
         padding: 15px 12px;
+        overflow-x: hidden;
+        overflow-y: auto;
         background: var(--white);
         border: 1px solid var(--line);
         border-radius: 0 0 14px 14px;
         box-shadow: 0 8px 20px rgba(0, 0, 0, .10);
-        overflow-y: auto;
-        overflow-x: hidden;
         scrollbar-width: none;
         -ms-overflow-style: none;
-        z-index: 40;
     }
 
     .sidebar:has(.sidebar-toggle-input:checked) .sidebar-content {
         display: block;
     }
-
-    /* Enlaces en dos columnas */
 
     .sidebar-section-label {
         margin-bottom: 10px;
@@ -468,69 +471,69 @@
         min-height: 40px;
         margin: 0;
         padding: 8px 10px;
-        border-radius: 8px;
-        border-left: 3px solid transparent;
-        font-size: 12px;
         overflow-wrap: anywhere;
+        font-size: 12px;
+        border-left: 3px solid transparent;
+        border-radius: 8px;
     }
 
     .sidebar-nav a.active {
         border-left-color: var(--pink);
     }
 
-    /* Ocultar sesión dentro del menú móvil */
-
     .sidebar-session {
         display: none;
     }
 
-    /* LADO DERECHO: TOPBAR */
+    /* ÁREA PRINCIPAL A ANCHO COMPLETO */
 
     .main-area {
-        grid-column: 2;
-        grid-row: 1 / span 2;
         width: 100%;
         min-width: 0;
+        max-width: 100%;
+        margin: 0;
+        overflow-x: clip;
     }
 
-    .topbar {
+    /* TOPBAR */
+
+    .main-area .topbar {
         position: relative;
         top: auto;
         right: auto;
-        width: 100%;
-        height: 68px;
-        min-height: 68px;
-        margin: 0;
-        padding: 8px 10px;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: flex-end;
         gap: 8px;
+        width: 100%;
+        height: 68px;
+        min-height: 68px;
+        max-height: 68px;
+        margin: 0;
+        padding: 8px 10px 8px 75px;
         background: var(--white);
         border: none;
         border-bottom: 1px solid var(--line);
-        border-radius: 0 0 12px 0;
+        border-radius: 0;
+        box-sizing: border-box;
         z-index: 10;
     }
-
-    /* Ocultar nombre del sistema */
 
     .topbar-brand {
         display: none !important;
     }
-
-    /* Datos del usuario */
 
     .topbar-user {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: flex-end;
-        width: 100%;
         gap: 10px;
-        margin: 0;
+        width: 100%;
         min-width: 0;
+        max-width: 100%;
+        margin: 0;
     }
 
     .topbar-user-info {
@@ -540,13 +543,14 @@
         justify-content: center;
         gap: 4px;
         min-width: 0;
+        overflow: hidden;
         text-align: right;
     }
 
     .topbar-user-info strong {
+        overflow-wrap: anywhere;
         font-size: 11px;
         line-height: 1.3;
-        overflow-wrap: anywhere;
     }
 
     .topbar-user-info span {
@@ -558,20 +562,18 @@
         display: none;
     }
 
-    /* Inicial decorativa */
-
     .topbar-avatar {
         display: grid;
         place-items: center;
         width: 38px;
         height: 38px;
         min-width: 38px;
-        border-radius: 50%;
-        background: var(--pink);
+        flex-shrink: 0;
         color: #2a1828;
         font-size: 15px;
         font-weight: 800;
-        flex-shrink: 0;
+        background: var(--pink);
+        border-radius: 50%;
     }
 }
 
@@ -581,14 +583,10 @@
 
 @media (max-width: 380px) {
 
-    .app-layout {
-        grid-template-columns: 58px minmax(0, 1fr);
-    }
-
     .sidebar {
         width: 58px;
-        padding-left: 5px;
         padding-right: 5px;
+        padding-left: 5px;
     }
 
     .sidebar-toggle-button {
@@ -596,9 +594,9 @@
         height: 44px;
     }
 
-    .topbar {
-        padding-left: 6px;
+    .main-area .topbar {
         padding-right: 8px;
+        padding-left: 68px;
     }
 
     .topbar-user {
@@ -617,65 +615,5 @@
         width: 35px;
         height: 35px;
         min-width: 35px;
-    }
-}
-
-/* =========================================
-   CORRECCIÓN DE ANCHO Y DESBORDAMIENTO
-========================================= */
-
-/* Eliminar márgenes predeterminados del navegador */
-html,
-body {
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-/* Evitar desplazamiento horizontal */
-body {
-    overflow-x: hidden;
-}
-
-@media (max-width: 760px) {
-
-    .app-layout {
-        width: 100%;
-        max-width: 100%;
-        grid-template-columns: 65px minmax(0, 1fr);
-        overflow-x: clip;
-    }
-
-    .sidebar {
-        width: 100%;
-        min-width: 0;
-    }
-
-    .main-area {
-        width: 100%;
-        min-width: 0;
-        max-width: 100%;
-        overflow-x: clip;
-    }
-
-    .topbar {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        margin: 0;
-        padding-left: 6px;
-        padding-right: 10px;
-        overflow: hidden;
-    }
-
-    .topbar-user {
-        min-width: 0;
-        max-width: 100%;
-    }
-
-    .topbar-user-info {
-        min-width: 0;
-        overflow: hidden;
     }
 }

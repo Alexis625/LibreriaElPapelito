@@ -38,12 +38,24 @@ $parametrosPaginacion = [
 
     <title><?= $titulo ?> | El Papelito</title>
 
-    <link rel="stylesheet" href="/el_papelito/public/assets/css/movimientos.css">
+    <link rel="stylesheet" href="/el_papelito/public/assets/css/layouts.css">
+<link rel="stylesheet" href="/el_papelito/public/assets/css/movimientos.css">
 </head>
 
 <body>
 
-    <main class="modulo-movimientos">
+    <div class="app-layout">
+
+        <?php
+        $moduloActual = 'movimientos';
+        require __DIR__ . '/../layouts/sidebar.php';
+        ?>
+
+        <div class="main-area">
+
+            <?php require __DIR__ . '/../layouts/topbar.php'; ?>
+
+            <main class="modulo-movimientos">
 
         <!-- ENCABEZADO -->
         <header class="movimientos-header">
@@ -351,9 +363,13 @@ $parametrosPaginacion = [
 
             </div>
 
-        </section>
+                </section>
 
-    </main>
+            </main>
+
+        </div>
+
+    </div>
 
 </body>
 

@@ -46,10 +46,20 @@ function formatoFechaHoraReservacion($fecha)
 }
 ?>
 
+<link rel="stylesheet" href="/el_papelito/public/assets/css/layouts.css">
 <link rel="stylesheet" href="/el_papelito/public/assets/css/proveedores.css">
 <link rel="stylesheet" href="/el_papelito/public/assets/css/reservaciones.css">
 
-<div class="modulo-reservaciones">
+<div class="app-layout">
+    <?php
+    $moduloActual = 'reservaciones';
+    require __DIR__ . '/../layouts/sidebar.php';
+    ?>
+
+    <div class="main-area">
+        <?php require __DIR__ . '/../layouts/topbar.php'; ?>
+
+        <main class="modulo-reservaciones">
 
     <!-- ENCABEZADO -->
     <div class="reservaciones-header">
@@ -308,8 +318,9 @@ function formatoFechaHoraReservacion($fecha)
             </div>
         <?php endif; ?>
 
+           </div>
+        </main>
     </div>
-
 </div>
 
 <!-- =====================================

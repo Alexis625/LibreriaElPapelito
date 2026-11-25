@@ -1,8 +1,4 @@
 
-/* =====================================
-   MINI LIBRERÍA EL PAPELITO
-   DASHBOARD ADMINISTRATIVO
-===================================== */
 
 * {
     margin: 0;
@@ -16,86 +12,26 @@ body {
     color: #171717;
 }
 
-/* CONTENEDOR PRINCIPAL */
+/* =====================================
+   CONTENEDOR PRINCIPAL
+===================================== */
 
 .dashboard-container {
     width: 100%;
     min-height: 100vh;
 }
 
-/* ENCABEZADO SUPERIOR */
-
-.topbar {
-    height: 84px;
-    background: #ffffff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 35px;
-    border-radius: 0 0 16px 16px;
-    border-bottom: 1px solid #f4eaf1;
-}
-
-.topbar-brand {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.topbar-brand strong {
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.topbar-brand span {
-    font-size: 12px;
-    color: #88818a;
-}
-
-.topbar-user {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-}
-
-.notification-indicator {
-    width: 11px;
-    height: 11px;
-    background: #e34d50;
-    border-radius: 50%;
-}
-
-.user-information {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.user-information strong {
-    font-size: 12px;
-}
-
-.user-information span {
-    font-size: 11px;
-    color: #88818a;
-}
-
-.user-information a {
-    color: inherit;
-    text-decoration: none;
-}
-
-.user-information a:hover {
-    color: #f044a8;
-}
-
-/* CONTENIDO DEL DASHBOARD */
+/* =====================================
+   CONTENIDO DEL DASHBOARD
+===================================== */
 
 .dashboard-content {
     padding: 22px 35px 40px;
 }
 
-/* BIENVENIDA */
+/* =====================================
+   BIENVENIDA
+===================================== */
 
 .welcome-section {
     margin-bottom: 22px;
@@ -112,7 +48,9 @@ body {
     font-size: 13px;
 }
 
-/* INDICADORES */
+/* =====================================
+   INDICADORES
+===================================== */
 
 .dashboard-stats {
     display: grid;
@@ -162,7 +100,9 @@ body {
     font-size: 11px;
 }
 
-/* SECCIÓN CENTRAL */
+/* =====================================
+   SECCIÓN CENTRAL
+===================================== */
 
 .dashboard-middle {
     display: grid;
@@ -183,7 +123,9 @@ body {
     margin-bottom: 24px;
 }
 
-/* GRÁFICO DE VENTAS */
+/* =====================================
+   GRÁFICO DE VENTAS
+===================================== */
 
 .sales-card {
     min-height: 265px;
@@ -225,7 +167,9 @@ body {
     font-size: 10px;
 }
 
-/* ATENCIÓN DE INVENTARIO */
+/* =====================================
+   ATENCIÓN DE INVENTARIO
+===================================== */
 
 .inventory-card {
     min-height: 265px;
@@ -269,7 +213,9 @@ body {
     white-space: nowrap;
 }
 
-/* ACCESOS RÁPIDOS */
+/* =====================================
+   ACCESOS RÁPIDOS
+===================================== */
 
 .quick-access {
     min-height: 140px;
@@ -301,11 +247,14 @@ body {
     transform: translateY(-2px);
 }
 
-/* RESPONSIVE */
+/* =====================================
+   RESPONSIVE - TABLETS
+===================================== */
 
 @media (max-width: 1000px) {
+
     .dashboard-stats {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .dashboard-middle {
@@ -313,21 +262,22 @@ body {
     }
 
     .quick-access-buttons {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
-@media (max-width: 600px) {
-    .topbar {
-        padding: 0 18px;
-    }
+/* =====================================
+   RESPONSIVE - TELÉFONOS
+===================================== */
 
-    .topbar-user {
-        gap: 12px;
-    }
+@media (max-width: 600px) {
 
     .dashboard-content {
-        padding: 22px 16px;
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+        padding: 22px 16px 40px;
+        box-sizing: border-box;
     }
 
     .welcome-section h1 {
