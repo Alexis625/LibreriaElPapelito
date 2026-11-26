@@ -23,7 +23,6 @@ body {
     min-width: 0;
     padding: 18px 36px 30px;
     color: var(--negro);
-    font-family: Arial, sans-serif;
     box-sizing: border-box;
 }
 
@@ -81,7 +80,6 @@ body {
     border-radius: 9px;
     background: var(--rosa);
     color: var(--blanco);
-    font-family: inherit;
     font-size: 12px;
     font-weight: 700;
     white-space: nowrap;
@@ -130,7 +128,6 @@ body {
     outline: none;
     background: var(--blanco);
     color: #333;
-    font-family: inherit;
     font-size: 13px;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
@@ -152,7 +149,6 @@ body {
     border-radius: 9px;
     background: var(--rosa);
     color: var(--blanco);
-    font-family: inherit;
     font-size: 12px;
     font-weight: 700;
     white-space: nowrap;
@@ -185,7 +181,6 @@ body {
     outline: none;
     background: var(--blanco);
     color: #333;
-    font-family: inherit;
     font-size: 13px;
 }
 
@@ -391,7 +386,6 @@ body {
     border-radius: 8px;
     background: var(--blanco);
     color: #444;
-    font-family: inherit;
     font-size: 12px;
     font-weight: 600;
     white-space: nowrap;
@@ -445,7 +439,6 @@ body {
     justify-content: center;
     padding: 20px;
     background: rgba(28, 22, 29, 0.58);
-    font-family: Arial, sans-serif;
 }
 
 .modal-overlay.activo {
@@ -470,7 +463,6 @@ body {
     border: 1px solid #f0e5ed;
     border-radius: 14px;
     box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
-    font-family: Arial, sans-serif;
 }
 
 /* ENCABEZADO */
@@ -548,7 +540,6 @@ body {
     outline: none;
     background: #ffffff;
     color: #333333;
-    font-family: Arial, sans-serif;
     font-size: 13px;
 }
 
@@ -577,7 +568,6 @@ body {
     min-height: 42px;
     padding: 0 17px;
     border-radius: 9px;
-    font-family: Arial, sans-serif;
     font-size: 12px;
     font-weight: 700;
     cursor: pointer;

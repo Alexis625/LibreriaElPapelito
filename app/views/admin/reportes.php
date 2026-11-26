@@ -30,11 +30,11 @@ $entero = static fn($valor) => number_format((int)$valor, 0, ',', '.');
             <a href="/el_papelito/public/productos">Inventario</a>
             <a href="/el_papelito/public/productos">Productos</a>
             <a href="/el_papelito/public/compras">Compras</a>
-            <a href="#" title="Módulo de ventas">Ventas</a>
-            <a href="#" title="Módulo de reservas">Reservas</a>
+            <a href="/el_papelito/public/ventas" title="Módulo de ventas">Ventas</a>
+            <a href="/el_papelito/public/reservaciones" title="Módulo de reservas">Reservas</a>
             <a href="/el_papelito/public/proveedores">Proveedores</a>
             <a href="/el_papelito/public/clientes">Clientes</a>
-            <a href="#" title="Módulo de usuarios">Usuarios</a>
+            <a href="/el_papelito/public/usuarios" title="Módulo de usuarios">Usuarios</a>
             <a class="active" href="/el_papelito/public/reportes">Reportes</a>
         </nav>
 

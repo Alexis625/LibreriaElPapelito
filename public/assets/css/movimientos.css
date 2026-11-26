@@ -25,7 +25,6 @@ body {
     min-width: 0;
     padding: 18px 36px 30px;
     color: var(--negro);
-    font-family: Arial, sans-serif;
     box-sizing: border-box;
 }
 
@@ -197,7 +196,6 @@ body {
     outline: none;
     background: var(--blanco);
     color: #333;
-    font-family: inherit;
     font-size: 13px;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
@@ -228,7 +226,6 @@ body {
     height: 42px;
     padding: 0 16px;
     border-radius: 9px;
-    font-family: inherit;
     font-size: 12px;
     font-weight: 700;
     white-space: nowrap;

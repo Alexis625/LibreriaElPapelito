@@ -6,7 +6,6 @@
 }
 
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
     background: #fff8fc;
     color: #171717;
 }
@@ -243,7 +242,6 @@ body {
     border: 1px solid #eadfe7;
     border-radius: 9px;
     outline: none;
-    font-family: inherit;
     font-size: 12px;
     background: #ffffff;
 }
@@ -344,7 +342,6 @@ body {
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    font-family: inherit;
     font-size: 14px;
 }
 

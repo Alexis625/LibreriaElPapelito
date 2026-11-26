@@ -7,7 +7,7 @@ $moduloActual = $moduloActual ?? '';
 
 $opcionesMenu = [
     ['nombre' => 'Resumen', 'ruta' => '/dashboard', 'modulo' => 'dashboard'],
-    ['nombre' => 'Inventario', 'ruta' => '/productos', 'modulo' => 'inventario'],
+    ['nombre' => 'Inventario', 'ruta' => '/movimientos', 'modulo' => 'inventario'],
     ['nombre' => 'Productos', 'ruta' => '/productos', 'modulo' => 'productos'],
     ['nombre' => 'Compras', 'ruta' => '/compras', 'modulo' => 'compras'],
     ['nombre' => 'Ventas', 'ruta' => '/ventas', 'modulo' => 'ventas'],

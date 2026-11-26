@@ -8,7 +8,6 @@
     max-width: 100%;
     padding: 35px 40px;
     color: #171717;
-    font-family: inherit;
 }
 
 .modulo-reservaciones,
@@ -191,7 +190,6 @@
     border-radius: 9px;
     background: #fff;
     color: #171717;
-    font-family: inherit;
     font-size: 14px;
     outline: none;
 }
@@ -580,7 +578,6 @@
     border-radius: 8px;
     background: #fff;
     color: #333;
-    font-family: inherit;
     font-size: 13px;
     outline: none;
 }
