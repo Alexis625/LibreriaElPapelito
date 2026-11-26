@@ -1,0 +1,417 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #fff8fc;
+    color: #171717;
+}
+
+.client-container {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.client-navbar {
+    background: #ffffff;
+    border-bottom: 1px solid #f5e6f1;
+    padding: 14px 35px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 750;
+    color: #171717;
+    text-decoration: none;
+}
+
+.brand-logo {
+    width: 75px;
+    height: 75px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #85808a;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s;
+    padding: 8px 14px;
+    border-radius: 10px;
+}
+
+.nav-links a:hover {
+    color: #171717;
+    background: #fae8f6;
+}
+
+.nav-links a.active {
+    color: #171717;
+    background: #fae8f6;
+    font-weight: 700;
+}
+
+.nav-btn-reserva {
+    background: #fae8f6;
+    color: #171717 !important;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-weight: 700 !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.badge-count {
+    background: #ed78d6;
+    color: #ffffff;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 20px;
+}
+
+.client-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 26px 35px 50px;
+}
+
+.welcome-section {
+    margin-bottom: 22px;
+}
+
+.welcome-section h1 {
+    font-size: 25px;
+    font-weight: 750;
+    margin-bottom: 7px;
+}
+
+.welcome-section p {
+    color: #85808a;
+    font-size: 13px;
+}
+
+.hero-banner {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 26px 30px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    border-left: 6px solid #ed78d6;
+}
+
+.hero-tag {
+    display: inline-block;
+    background: #fae8f6;
+    color: #171717;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+.hero-text h2 {
+    font-size: 19px;
+    font-weight: 750;
+    margin-bottom: 6px;
+}
+
+.hero-text p {
+    color: #85808a;
+    font-size: 12px;
+}
+
+.hero-cta {
+    background: #ed78d6;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 12px 22px;
+    border-radius: 13px;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.hero-cta:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.dashboard-card {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 21px;
+    margin-bottom: 26px;
+}
+
+.dashboard-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.quick-access-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.quick-access-buttons a {
+    background: #fae8f6;
+    color: #171717;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 14px 18px;
+    border-radius: 13px;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.quick-access-buttons a:hover {
+    background: #f5d3ec;
+    transform: translateY(-2px);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.section-header h3 {
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.section-header a {
+    color: #ed78d6;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.product-card {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-3px);
+}
+
+.product-thumb {
+    background: #fff8fc;
+    border-radius: 12px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 42px;
+    margin-bottom: 14px;
+}
+
+.product-cat {
+    color: #85808a;
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.product-info h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+.product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.product-price {
+    font-size: 16px;
+    font-weight: 750;
+    color: #171717;
+}
+
+.btn-reserve {
+    background: #fae8f6;
+    color: #171717;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-reserve:hover {
+    background: #ed78d6;
+    color: #ffffff;
+}
+
+@media (max-width: 1000px) {
+    .products-grid,
+    .quick-access-buttons {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .client-navbar,
+    .client-content {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .hero-banner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .products-grid,
+    .quick-access-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+
+.tabla-cliente {
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    margin-top: 10px !important;
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+
+.tabla-cliente thead th {
+    background: #fae8f6 !important;
+    color: #171717 !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    padding: 14px 18px !important;
+    text-align: left !important;
+    border-bottom: 2px solid #ed78d6 !important;
+}
+
+.tabla-cliente tbody td {
+    padding: 14px 18px !important;
+    text-align: left !important;
+    border-bottom: 1px solid #f5e6f1 !important;
+    font-size: 13px !important;
+    color: #171717 !important;
+}
+
+.tabla-cliente tbody tr:last-child td {
+    border-bottom: none !important;
+}
+
+.tabla-cliente tbody tr:hover {
+    background: #fff8fc !important;
+}
+
+/* Badges de estado */
+.estado {
+    display: inline-block !important;
+    padding: 5px 14px !important;
+    border-radius: 20px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: capitalize !important;
+}
+
+.estado-ok {
+    background: #e8f8ee !important;
+    color: #23834b !important;
+}
+
+.estado-pendiente {
+    background: #fff4e0 !important;
+    color: #c97a1a !important;
+}
+
+.estado-cancelada {
+    background: #ffe8e6 !important;
+    color: #d94b3d !important;
+}
+
+.total-reserva {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-top: 25px !important;
+    padding-top: 20px !important;
+    border-top: 2px solid #f5e6f1 !important;
+}
+
+.total-reserva h3 {
+    font-size: 20px !important;
+    font-weight: 750 !important;
+    color: #171717 !important;
+    margin: 0 !important;
+}
+
+.btn-confirmar {
+    background: #ed78d6 !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 14px 28px !important;
+    border-radius: 13px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    transition: opacity 0.2s, transform 0.2s !important;
+}
+
+.btn-confirmar:hover {
+    opacity: 0.9 !important;
+    transform: translateY(-2px) !important;
+}
