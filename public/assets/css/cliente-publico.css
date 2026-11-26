@@ -15,10 +15,6 @@ body {
     min-height: 100vh;
 }
 
-/* =====================================
-   BARRA DE NAVEGACIÓN (ESTILO ADMIN)
-===================================== */
-
 .client-navbar {
     background: #ffffff;
     border-bottom: 1px solid #f5e6f1;
@@ -99,10 +95,6 @@ body {
     border-radius: 20px;
 }
 
-/* =====================================
-   CONTENIDO PRINCIPAL
-===================================== */
-
 .client-content {
     max-width: 1200px;
     margin: 0 auto;
@@ -123,10 +115,6 @@ body {
     color: #85808a;
     font-size: 13px;
 }
-
-/* =====================================
-   BANNER HERO SUAVE
-===================================== */
 
 .hero-banner {
     background: #ffffff;
@@ -179,10 +167,6 @@ body {
     transform: translateY(-2px);
 }
 
-/* =====================================
-   ACCESOS RÁPIDOS (IDÉNTICO AL ADMIN)
-===================================== */
-
 .dashboard-card {
     background: #ffffff;
     border-radius: 15px;
@@ -217,10 +201,6 @@ body {
     background: #f5d3ec;
     transform: translateY(-2px);
 }
-
-/* =====================================
-   PRODUCTOS DESTACADOS
-===================================== */
 
 .section-header {
     display: flex;
@@ -315,10 +295,6 @@ body {
     color: #ffffff;
 }
 
-/* =====================================
-   RESPONSIVE (IGUAL QUE EL ADMIN)
-===================================== */
-
 @media (max-width: 1000px) {
     .products-grid,
     .quick-access-buttons {
@@ -343,9 +319,6 @@ body {
         grid-template-columns: 1fr;
     }
 }
-/* =====================================
-   TABLAS (Historial y Reservas) - FORZADO
-===================================== */
 
 .tabla-cliente {
     width: 100% !important;
@@ -410,7 +383,6 @@ body {
     color: #d94b3d !important;
 }
 
-/* Total de reserva */
 .total-reserva {
     display: flex !important;
     justify-content: space-between !important;

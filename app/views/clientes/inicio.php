@@ -1,12 +1,10 @@
 <?php include __DIR__ . '/../layouts/cliente_topbar.php'; ?>
 
-<!-- Bienvenida -->
 <section class="welcome-section">
     <h1>¡Bienvenido a El Papelito!</h1>
     <p>Todo lo que necesitas para escribir, crear y hacer realidad tus ideas.</p>
 </section>
 
-<!-- Banner Hero -->
 <section class="hero-banner">
     <div class="hero-text">
         <span class="hero-tag">Nueva Colección 2026</span>
@@ -16,7 +14,6 @@
     <a href="/LibreriaElPapelito/app/views/clientes/productos.php" class="hero-cta">Explorar catálogo</a>
 </section>
 
-<!-- Accesos rápidos -->
 <section class="dashboard-card">
     <h3>Explorar por categoría</h3>
     <div class="quick-access-buttons">
@@ -27,7 +24,6 @@
     </div>
 </section>
 
-<!-- Productos Destacados -->
 <section class="dashboard-card">
     <div class="section-header">
         <h3>Productos Destacados</h3>

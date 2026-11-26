@@ -18,7 +18,6 @@
 </a>
             <div class="nav-links">
                 <?php
-                // Detectar la página actual
                 $paginaActual = basename($_SERVER['PHP_SELF']);
                 ?>
                 <a href="/LibreriaElPapelito/app/views/clientes/inicio.php" 
