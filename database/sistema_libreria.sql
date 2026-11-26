@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-11-2026 a las 03:58:16
+-- Tiempo de generación: 26-11-2026 a las 03:55:04
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -44,7 +44,8 @@ INSERT INTO `categorias` (`id_categoria`, `nombre`, `descripcion`, `activa`) VAL
 (3, 'Papel y archivo', 'Papel, folders y materiales de archivo', 1),
 (4, 'Dibujo y arte', 'Colores y materiales para dibujo', 1),
 (5, 'Libros', 'Libros de apoyo y lectura', 1),
-(6, 'benjamin', 'chanfle', 1);
+(6, 'benjamin', 'chanfle', 1),
+(7, 'Papelería', 'Cuaderno, pliego papel bond', 1);
 
 -- --------------------------------------------------------
 
@@ -70,8 +71,9 @@ INSERT INTO `clientes` (`id_cliente`, `nombre_completo`, `telefono`, `correo`, `
 (1, 'Ana Martinez', '7123-4567', 'ana.martinez@email.test', 'Ayutuxtepeque, San Salvador', '2026-10-05 10:15:00', 1),
 (2, 'Luis Gomez', '7234-5678', 'luis.gomez@email.test', 'Mejicanos, San Salvador', '2026-10-06 11:20:00', 1),
 (3, 'Maria Lopez', '7345-6789', 'maria.lopez@email.test', 'San Salvador', '2026-10-08 14:00:00', 1),
-(4, 'Jose Ramirez', '7456-7890', 'jose.ramirez@email.test', 'Cuscatancingo, San Salvador', '2026-10-10 09:45:00', 1),
-(5, 'Sofia Hernandez', '7567-8901', NULL, 'Apopa, San Salvador', '2026-10-12 15:30:00', 1);
+(4, 'Jose Ramirez', '7456-7890', 'jose.ramirez@email.test', 'Cuscatancingo, San Salvador', '2026-10-10 09:45:00', 0),
+(5, 'Sofia Hernandez', '7567-8901', NULL, 'Apopa, San Salvador', '2026-10-12 15:30:00', 1),
+(6, 'Alexis Benjamin Cisneros Luciano', '69242927', 'bluciano658@gmail.com', 'Col San Benito Av. Las Palmas', '2026-11-18 22:18:54', 1);
 
 -- --------------------------------------------------------
 
@@ -95,7 +97,10 @@ CREATE TABLE `compras` (
 
 INSERT INTO `compras` (`id_compra`, `id_proveedor`, `id_usuario`, `fecha_compra`, `numero_documento`, `observaciones`, `estado`) VALUES
 (1, 1, 1, '2026-10-15 09:30:00', 'FAC-PROV-1045', 'Compra de cuadernos y lapiceros recibida', 'RECIBIDA'),
-(2, 2, 2, '2026-10-28 10:45:00', 'FAC-PROV-1088', 'Reposicion de papel y articulos escolares', 'RECIBIDA');
+(2, 2, 2, '2026-10-28 10:45:00', 'FAC-PROV-1088', 'Reposicion de papel y articulos escolares', 'RECIBIDA'),
+(3, 3, 1, '2026-11-17 23:55:28', '7777', 'opcional', 'RECIBIDA'),
+(4, 3, 1, '2026-11-17 23:56:12', '7777', NULL, 'ANULADA'),
+(5, 2, 1, '2026-11-18 23:24:27', '0002', 'abastecimiento papeleria', 'RECIBIDA');
 
 -- --------------------------------------------------------
 
@@ -120,7 +125,12 @@ INSERT INTO `detalle_compra` (`id_detalle_compra`, `id_compra`, `id_producto`, `
 (1, 1, 1, 20, 1.60),
 (2, 1, 3, 50, 0.15),
 (3, 2, 7, 8, 4.25),
-(4, 2, 8, 30, 0.18);
+(4, 2, 8, 30, 0.18),
+(5, 3, 5, 5, 0.10),
+(6, 3, 1, 1, 1.60),
+(7, 4, 7, 5, 4.25),
+(8, 5, 6, 20, 0.15),
+(9, 5, 14, 10, 2.50);
 
 -- --------------------------------------------------------
 
@@ -143,7 +153,9 @@ INSERT INTO `detalle_reserva` (`id_detalle_reserva`, `id_reserva`, `id_producto`
 (1, 1, 5, 4),
 (2, 1, 6, 2),
 (3, 2, 12, 1),
-(4, 3, 1, 3);
+(4, 3, 1, 3),
+(5, 4, 5, 8),
+(6, 5, 11, 20);
 
 -- --------------------------------------------------------
 
@@ -170,7 +182,12 @@ INSERT INTO `detalle_venta` (`id_detalle_venta`, `id_venta`, `id_producto`, `can
 (1, 1, 1, 2, 2.50, 1.60),
 (2, 1, 3, 5, 0.30, 0.15),
 (3, 2, 7, 1, 5.75, 4.25),
-(4, 2, 10, 1, 2.80, 1.90);
+(4, 2, 10, 1, 2.80, 1.90),
+(5, 3, 12, 2, 6.50, 4.50),
+(6, 3, 5, 9, 0.25, 0.10),
+(7, 3, 8, 6, 0.40, 0.18),
+(8, 4, 9, 70, 0.20, 0.08),
+(9, 5, 11, 20, 1.25, 0.70);
 
 -- --------------------------------------------------------
 
@@ -199,7 +216,24 @@ INSERT INTO `movimientos_inventario` (`id_movimiento`, `id_producto`, `id_usuari
 (1, 1, 1, 'ENTRADA_COMPRA', 20, 25, 45, '2026-10-15 09:35:00', 'COMPRA-1', 'Ingreso de cuadernos'),
 (2, 3, 2, 'ENTRADA_COMPRA', 50, 30, 80, '2026-10-15 09:40:00', 'COMPRA-1', 'Ingreso de lapiceros azules'),
 (3, 7, 1, 'ENTRADA_COMPRA', 8, 4, 12, '2026-10-28 10:50:00', 'COMPRA-2', 'Ingreso de resmas de papel'),
-(4, 13, 1, 'AJUSTE_SALIDA', 8, 90, 82, '2026-11-17 12:07:18', NULL, 'defectuosos');
+(4, 13, 1, 'AJUSTE_SALIDA', 8, 90, 82, '2026-11-17 12:07:18', NULL, 'defectuosos'),
+(5, 5, 1, 'ENTRADA_COMPRA', 5, 90, 95, '2026-11-17 23:55:28', 'COMPRA #3', 'Entrada por compra'),
+(6, 1, 1, 'ENTRADA_COMPRA', 1, 5, 6, '2026-11-17 23:55:28', 'COMPRA #3', 'Entrada por compra'),
+(7, 7, 1, 'ENTRADA_COMPRA', 5, 12, 17, '2026-11-17 23:56:12', 'COMPRA #4', 'Entrada por compra'),
+(8, 7, 1, 'AJUSTE_SALIDA', 5, 17, 12, '2026-11-18 11:07:18', 'ANULACION COMPRA #4', 'Reversión de compra anulada'),
+(9, 13, 1, 'AJUSTE_ENTRADA', 8, 82, 90, '2026-11-18 23:20:03', NULL, ''),
+(10, 6, 1, 'ENTRADA_COMPRA', 20, 40, 60, '2026-11-18 23:24:27', 'COMPRA #5', 'Entrada por compra'),
+(11, 14, 1, 'ENTRADA_COMPRA', 10, 10, 20, '2026-11-18 23:24:27', 'COMPRA #5', 'Entrada por compra'),
+(12, 12, 1, 'SALIDA_VENTA', 2, 2, 0, '2026-11-21 18:10:42', 'VENTA #3', 'Salida por venta'),
+(13, 5, 1, 'SALIDA_VENTA', 9, 95, 86, '2026-11-21 18:10:42', 'VENTA #3', 'Salida por venta'),
+(14, 8, 1, 'SALIDA_VENTA', 6, 55, 49, '2026-11-21 18:10:42', 'VENTA #3', 'Salida por venta'),
+(15, 12, 1, 'AJUSTE_ENTRADA', 2, 0, 2, '2026-11-21 18:23:49', 'ANULACION VENTA #3', 'Devolución por anulación de venta'),
+(16, 5, 1, 'AJUSTE_ENTRADA', 9, 86, 95, '2026-11-21 18:23:49', 'ANULACION VENTA #3', 'Devolución por anulación de venta'),
+(17, 8, 1, 'AJUSTE_ENTRADA', 6, 49, 55, '2026-11-21 18:23:49', 'ANULACION VENTA #3', 'Devolución por anulación de venta'),
+(18, 9, 1, 'SALIDA_VENTA', 70, 70, 0, '2026-11-21 22:42:24', 'VENTA #4', 'Salida por venta'),
+(19, 11, 1, 'AJUSTE_SALIDA', 20, 24, 4, '2026-11-22 23:06:04', 'RESERVA #5', 'Salida por creación de reservación'),
+(20, 11, 1, 'AJUSTE_ENTRADA', 20, 4, 24, '2026-11-22 23:08:23', 'RESERVA #5', 'Devolución por cancelación de reservación'),
+(21, 11, 1, 'AJUSTE_SALIDA', 20, 24, 4, '2026-11-22 23:08:49', 'RESERVA #5', 'Salida por reactivación de reservación');
 
 -- --------------------------------------------------------
 
@@ -227,19 +261,20 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id_producto`, `id_categoria`, `codigo`, `nombre`, `descripcion`, `precio_compra`, `precio_venta`, `existencia`, `stock_minimo`, `activo`, `fecha_registro`, `fecha_actualizacion`) VALUES
-(1, 1, 'CUA-001', 'Cuaderno universitario 100 hojas', 'Cuaderno rayado de espiral', 1.60, 2.50, 5, 10, 1, '2026-11-16 20:08:04', '2026-11-16 22:33:45'),
+(1, 1, 'CUA-001', 'Cuaderno universitario 100 hojas', 'Cuaderno rayado de espiral', 1.60, 2.50, 6, 10, 1, '2026-11-16 20:08:04', '2026-11-17 23:55:28'),
 (2, 1, 'CUA-002', 'Cuaderno pequeno cosido', 'Cuaderno de 50 hojas', 0.65, 1.00, 32, 8, 1, '2026-11-16 20:08:04', '2026-11-16 20:08:04'),
 (3, 2, 'ESC-001', 'Lapicero azul', 'Lapicero de tinta azul', 0.15, 0.30, 80, 20, 1, '2026-11-16 20:08:04', '2026-11-16 20:08:04'),
 (4, 2, 'ESC-002', 'Lapicero negro', 'Lapicero de tinta negra', 0.15, 0.30, 65, 20, 1, '2026-11-16 20:08:04', '2026-11-16 20:08:04'),
-(5, 2, 'ESC-003', 'Lapiz grafito HB', 'Lapiz numero 2', 0.10, 0.25, 90, 25, 1, '2026-11-16 20:08:04', '2026-11-16 20:08:04'),
-(6, 2, 'ESC-004', 'Borrador blanco', 'Borrador escolar', 0.12, 0.25, 40, 10, 1, '2026-11-16 20:08:04', '2026-11-16 20:08:04'),
-(7, 3, 'PAP-001', 'Resma de papel carta', 'Papel bond carta, 500 hojas', 4.25, 5.75, 12, 5, 1, '2026-11-16 20:08:04', '2026-11-16 20:08:04'),
-(8, 3, 'PAP-002', 'Folder tamano carta', 'Folder manila carta', 0.18, 0.40, 55, 15, 1, '2026-11-16 20:08:04', '2026-11-16 20:08:04'),
-(9, 3, 'PAP-003', 'Pliego de papel bond', 'Pliego individual', 0.08, 0.20, 70, 20, 1, '2026-11-16 20:08:04', '2026-11-16 20:08:04'),
+(5, 2, 'ESC-003', 'Lapiz grafito HB', 'Lapiz numero 2', 0.10, 0.25, 95, 25, 1, '2026-11-16 20:08:04', '2026-11-21 18:23:49'),
+(6, 2, 'ESC-004', 'Borrador blanco', 'Borrador escolar', 0.15, 0.25, 60, 10, 1, '2026-11-16 20:08:04', '2026-11-18 23:24:27'),
+(7, 3, 'PAP-001', 'Resma de papel carta', 'Papel bond carta, 500 hojas', 4.25, 5.75, 12, 5, 1, '2026-11-16 20:08:04', '2026-11-18 11:07:17'),
+(8, 3, 'PAP-002', 'Folder tamano carta', 'Folder manila carta', 0.18, 0.40, 55, 15, 1, '2026-11-16 20:08:04', '2026-11-21 18:23:49'),
+(9, 3, 'PAP-003', 'Pliego de papel bond', 'Pliego individual', 0.08, 0.20, 0, 20, 1, '2026-11-16 20:08:04', '2026-11-21 22:42:24'),
 (10, 4, 'ART-001', 'Colores de madera x12', 'Caja de 12 colores', 1.90, 2.80, 18, 6, 1, '2026-11-16 20:08:04', '2026-11-16 20:08:04'),
-(11, 4, 'ART-002', 'Marcador permanente', 'Marcador punta mediana', 0.70, 1.25, 24, 8, 1, '2026-11-16 20:08:04', '2026-11-16 20:08:04'),
-(12, 5, 'LIB-001', 'Libro de lectura', 'Libro de apoyo escolar', 4.50, 6.50, 9, 3, 1, '2026-11-16 20:08:04', '2026-11-17 15:44:19'),
-(13, 6, '001', 'lapiz', 'no lo se', 20.00, 25.00, 82, 22, 1, '2026-11-16 23:30:26', '2026-11-17 12:07:18');
+(11, 4, 'ART-002', 'Marcador permanente', 'Marcador punta mediana', 0.70, 1.25, 4, 8, 1, '2026-11-16 20:08:04', '2026-11-22 23:08:49'),
+(12, 5, 'LIB-001', 'Libro de lectura', 'Libro de apoyo escolar', 4.50, 6.50, 2, 3, 1, '2026-11-16 20:08:04', '2026-11-21 18:23:49'),
+(13, 7, '001', 'lapiz', 'no lo se', 20.00, 25.00, 90, 22, 1, '2026-11-16 23:30:26', '2026-11-18 23:20:13'),
+(14, 1, '807', 'prueba', '', 2.50, 2.50, 20, 5, 1, '2026-11-18 23:21:04', '2026-11-18 23:24:27');
 
 -- --------------------------------------------------------
 
@@ -290,7 +325,9 @@ CREATE TABLE `reservas` (
 INSERT INTO `reservas` (`id_reserva`, `id_cliente`, `fecha_reserva`, `fecha_limite_retiro`, `estado`, `observaciones`) VALUES
 (1, 2, '2026-11-10 09:15:00', '2026-11-15', 'PENDIENTE', 'Retiro durante el fin de semana'),
 (2, 4, '2026-11-11 11:30:00', '2026-11-16', 'CONFIRMADA', 'Reserva confirmada por telefono'),
-(3, 5, '2026-11-12 14:00:00', '2026-11-17', 'PENDIENTE', 'Retiro en tienda');
+(3, 5, '2026-11-12 14:00:00', '2026-11-17', 'CANCELADA', '{\"registrado_por\":\"No disponible\",\"observaciones\":\"Retiro en tienda\",\"inventario_descontado\":false}'),
+(4, 2, '2026-11-22 19:40:18', '2026-11-24', 'ENTREGADA', '{\"registrado_por\":\"Alexis Benjamin Cisneros Luciano\",\"observaciones\":null}'),
+(5, 1, '2026-11-22 23:06:04', '2026-11-03', 'ENTREGADA', '{\"registrado_por\":\"Alexis Benjamin Cisneros Luciano\",\"observaciones\":null,\"inventario_descontado\":true}');
 
 -- --------------------------------------------------------
 
@@ -310,7 +347,8 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`id_rol`, `nombre`, `descripcion`) VALUES
 (1, 'Administrador', 'Acceso a la administracion completa del sistema'),
-(2, 'Empleado', 'Acceso a operaciones de ventas y consulta');
+(2, 'Empleado', 'Acceso a operaciones de ventas y consulta'),
+(3, 'Cliente', 'Compras en la tienda');
 
 -- --------------------------------------------------------
 
@@ -336,7 +374,9 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id_usuario`, `id_rol`, `nombre_completo`, `nombre_usuario`, `correo`, `password_hash`, `activo`, `fecha_creacion`) VALUES
 (1, 1, 'Alexis Benjamin Cisneros Luciano', 'admin.acisneros', 'alexis.cisneros@papelito.test', '$2y$10$10B6InHHJdxUu.QQUjiipuATaksxuPuWmm7Z6YkQbH8Ocwbd6B.uS', 1, '2026-10-01 08:00:00'),
 (2, 1, 'Carlos Mendez Rivera', 'admin.cmendez', 'carlos.mendez@papelito.test', '$2y$10$HASH_DEMO_NO_VALIDO_PARA_LOGIN', 1, '2026-10-02 08:30:00'),
-(3, 2, 'Daniela Flores Castro', 'dflores', 'daniela.flores@papelito.test', '$2y$10$HASH_DEMO_NO_VALIDO_PARA_LOGIN', 1, '2026-10-03 09:00:00');
+(3, 2, 'Daniela Flores Castro', 'dflores', 'daniela.flores@papelito.test', '$2y$10$HASH_DEMO_NO_VALIDO_PARA_LOGIN', 1, '2026-10-03 09:00:00'),
+(4, 3, 'Cliente', 'Cliente', 'cliente@gmail.com', '$2y$10$ptK8t6meOyYxCPAFQ2gxV.9vPGn6Wq0/9kBBWg6qj3p5cBv.B.ApS', 1, '2026-11-22 00:57:07'),
+(5, 3, 'Ingrid Guyedes', 'admin.ingrid', 'ingridguyedes@gmail.com', '$2y$10$bQuUEnnSho55JFOD8kHXV.jZV.5m0CsDYdbjrqoHsF7CsIsz18Ere', 1, '2026-11-23 22:24:01');
 
 -- --------------------------------------------------------
 
@@ -359,7 +399,10 @@ CREATE TABLE `ventas` (
 
 INSERT INTO `ventas` (`id_venta`, `id_cliente`, `id_usuario`, `fecha_venta`, `observaciones`, `estado`) VALUES
 (1, 1, 3, '2026-11-05 10:20:00', 'Venta de utiles escolares', 'COMPLETADA'),
-(2, 3, 1, '2026-11-08 16:10:00', 'Venta de articulos de papeleria', 'COMPLETADA');
+(2, 3, 1, '2026-11-08 16:10:00', 'Venta de articulos de papeleria', 'COMPLETADA'),
+(3, 6, 1, '2026-11-21 18:10:42', NULL, 'ANULADA'),
+(4, NULL, 1, '2026-11-21 22:42:24', NULL, 'COMPLETADA'),
+(5, 1, 1, '2026-11-22 23:09:04', 'Venta generada por entrega de reservación #5', 'COMPLETADA');
 
 --
 -- Índices para tablas volcadas
@@ -480,19 +523,19 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id_categoria` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_categoria` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_cliente` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `compras`
 --
 ALTER TABLE `compras`
-  MODIFY `id_compra` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_compra` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_compra`
@@ -534,25 +577,25 @@ ALTER TABLE `proveedores`
 -- AUTO_INCREMENT de la tabla `reservas`
 --
 ALTER TABLE `reservas`
-  MODIFY `id_reserva` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_reserva` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id_rol` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_rol` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_usuario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id_venta` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_venta` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
