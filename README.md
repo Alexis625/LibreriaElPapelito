@@ -4,8 +4,7 @@ Descripción
 
 El sistema reúne herramientas para administrar las operaciones principales de una librería desde una aplicación web local. Incluye módulos para el control de productos e inventario, compras, ventas, clientes, proveedores, reservaciones, usuarios y reportes.
 
-El proyecto también contiene vistas destinadas a la interfaz de clientes (inicio, productos, reservas e historial). En la versión actual del código, estas vistas están incluidas en el repositorio, pero sus rutas públicas todavía deben integrarse al enrutador para que puedan recorrerse desde la aplicación.
-Tecnologías utilizadas
+
 - PHP 8.0 o superior – lógica del servidor.
 - MySQL – almacenamiento de datos.
 - PDO – conexión entre PHP y la base de datos.
@@ -14,6 +13,8 @@ Tecnologías utilizadas
 - JavaScript – interacciones del lado del cliente.
 - Apache – servidor web local (incluido en XAMPP).
 - XAMPP – entorno de desarrollo local.
+
+- 
 Funcionalidades y módulos
 - Autenticación: inicio y cierre de sesión.
 - Panel principal: acceso al dashboard administrativo.
