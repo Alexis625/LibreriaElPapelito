@@ -1,3 +1,4 @@
+
 <?php include __DIR__ . '/../layouts/cliente_topbar.php'; ?>
 
 <section class="welcome-section">
@@ -6,109 +7,89 @@
 </section>
 
 <section class="dashboard-card">
+
     <div class="products-grid">
 
-        <div class="product-card">
-            <div class="product-thumb">📒</div>
-            <span class="product-cat">Papelería</span>
-            <div class="product-info">
-                <h4>Cuaderno Profesional</h4>
-            </div>
-            <div class="product-footer">
-                <span class="product-price">$15.00</span>
-                <a href="/LibreriaElPapelito/app/views/clientes/reservas.php" class="btn-reserve">Reservar</a>
-            </div>
-        </div>
+        <?php if (!empty($productos)): ?>
 
-        <div class="product-card">
-            <div class="product-thumb">📚</div>
-            <span class="product-cat">Libros</span>
-            <div class="product-info">
-                <h4>Cien Años de Soledad</h4>
-            </div>
-            <div class="product-footer">
-                <span class="product-price">$20.00</span>
-                <a href="/LibreriaElPapelito/app/views/clientes/reservas.php" class="btn-reserve">Reservar</a>
-            </div>
-        </div>
+            <?php foreach ($productos as $producto): ?>
 
-        <div class="product-card">
-            <div class="product-thumb">🖊️</div>
-            <span class="product-cat">Escritura</span>
-            <div class="product-info">
-                <h4>Set de Plumas</h4>
-            </div>
-            <div class="product-footer">
-                <span class="product-price">$25.00</span>
-                <a href="/LibreriaElPapelito/app/views/clientes/reservas.php" class="btn-reserve">Reservar</a>
-            </div>
-        </div>
+                <div class="product-card">
 
-        <div class="product-card">
-            <div class="product-thumb">📖</div>
-            <span class="product-cat">Libros</span>
-            <div class="product-info">
-                <h4>El Principito</h4>
-            </div>
-            <div class="product-footer">
-                <span class="product-price">$12.50</span>
-                <a href="/LibreriaElPapelito/app/views/clientes/reservas.php" class="btn-reserve">Reservar</a>
-            </div>
-        </div>
+                    <div class="product-thumb">📦</div>
 
-        <div class="product-card">
-            <div class="product-thumb">✏️</div>
-            <span class="product-cat">Escritura</span>
-            <div class="product-info">
-                <h4>Lápices de Colores</h4>
-            </div>
-            <div class="product-footer">
-                <span class="product-price">$8.00</span>
-                <a href="/LibreriaElPapelito/app/views/clientes/reservas.php" class="btn-reserve">Reservar</a>
-            </div>
-        </div>
+                    <span class="product-cat">
+                        <?= htmlspecialchars($producto['categoria'] ?? 'Sin categoría', ENT_QUOTES, 'UTF-8') ?>
+                    </span>
 
-        <div class="product-card">
-            <div class="product-thumb">📒</div>
-            <span class="product-cat">Papelería</span>
-            <div class="product-info">
-                <h4>Agenda 2026</h4>
-            </div>
-            <div class="product-footer">
-                <span class="product-price">$18.00</span>
-                <a href="/LibreriaElPapelito/app/views/clientes/reservas.php" class="btn-reserve">Reservar</a>
-            </div>
-        </div>
+                    <div class="product-info">
 
-        <div class="product-card">
-            <div class="product-thumb">🎨</div>
-            <span class="product-cat">Arte</span>
-            <div class="product-info">
-                <h4>Set de Acuarelas</h4>
-            </div>
-            <div class="product-footer">
-                <span class="product-price">$32.00</span>
-                <a href="/LibreriaElPapelito/app/views/clientes/reservas.php" class="btn-reserve">Reservar</a>
-            </div>
-        </div>
+                        <h4>
+                            <?= htmlspecialchars($producto['nombre'], ENT_QUOTES, 'UTF-8') ?>
+                        </h4>
 
-        <div class="product-card">
-            <div class="product-thumb">📓</div>
-            <span class="product-cat">Papelería</span>
-            <div class="product-info">
-                <h4>Libreta de Piel</h4>
-            </div>
-            <div class="product-footer">
-                <span class="product-price">$22.00</span>
-                <a href="/LibreriaElPapelito/app/views/clientes/reservas.php" class="btn-reserve">Reservar</a>
-            </div>
-        </div>
+                        <p>
+                            Disponibles: <?= (int)$producto['existencia'] ?>
+                        </p>
+
+                    </div>
+
+                    <div class="product-footer">
+                        <span class="product-price">
+                            $<?= number_format((float)$producto['precio_venta'], 2) ?>
+                        </span>
+                    </div>
+
+                    <form
+                        action="/el_papelito/public/cliente/carrito/agregar"
+                        method="POST"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="id_producto"
+                            value="<?= (int)$producto['id_producto'] ?>"
+                        >
+
+                        <label style="display:block; margin:12px 0 5px;">
+                            Cantidad
+                        </label>
+
+                        <input
+                            type="number"
+                            name="cantidad"
+                            value="1"
+                            min="1"
+                            max="<?= (int)$producto['existencia'] ?>"
+                            required
+                            style="width:100%; padding:10px; border:1px solid #d88acb; border-radius:8px; box-sizing:border-box; margin-bottom:12px;"
+                        >
+
+                        <button
+                            type="submit"
+                            class="btn-reserve"
+                            <?= (int)$producto['existencia'] <= 0 ? 'disabled' : '' ?>
+                        >
+                            Agregar a reserva
+                        </button>
+
+                    </form>
+
+                </div>
+
+            <?php endforeach; ?>
+
+        <?php else: ?>
+
+            <p>No hay productos disponibles actualmente.</p>
+
+        <?php endif; ?>
 
     </div>
+
 </section>
 
-    </main>
+</main>
 </div>
-
 </body>
 </html>

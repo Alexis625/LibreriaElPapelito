@@ -390,6 +390,181 @@ class Reservacion
         ]);
     }
 
+
+// =====================================
+// REGISTRAR SOLICITUD DESDE CLIENTE
+// =====================================
+
+public function registrarSolicitudCliente(
+    $idCliente,
+    $nombreCliente,
+    $productos,
+    $cantidades,
+    $fechaLimite = '',
+    $observaciones = ''
+) {
+    try {
+        if (
+            !filter_var($idCliente, FILTER_VALIDATE_INT) ||
+            trim($nombreCliente) === '' ||
+            !is_array($productos) ||
+            !is_array($cantidades) ||
+            empty($productos) ||
+            count($productos) !== count($cantidades)
+        ) {
+            throw new Exception('Los datos de la reservación no son válidos.');
+        }
+
+        $productos = array_values($productos);
+        $cantidades = array_values($cantidades);
+
+        if (count(array_unique(array_map('strval', $productos))) !== count($productos)) {
+            throw new Exception('Hay productos repetidos en la solicitud.');
+        }
+
+        if ($fechaLimite !== '') {
+            $fecha = DateTime::createFromFormat('Y-m-d', $fechaLimite);
+
+            if (!$fecha || $fecha->format('Y-m-d') !== $fechaLimite) {
+                throw new Exception('La fecha de retiro no es válida.');
+            }
+        }
+
+        $this->conexion->beginTransaction();
+
+        $consultaCliente = $this->conexion->prepare(
+            "SELECT id_cliente
+             FROM clientes
+             WHERE id_cliente = :id AND activo = 1
+             FOR UPDATE"
+        );
+
+        $consultaCliente->execute([':id' => $idCliente]);
+
+        if (!$consultaCliente->fetch(PDO::FETCH_ASSOC)) {
+            throw new Exception('La cuenta del cliente no está activa.');
+        }
+
+        $consultaProducto = $this->conexion->prepare(
+            "SELECT id_producto, nombre, existencia
+             FROM productos
+             WHERE id_producto = :id AND activo = 1
+             FOR UPDATE"
+        );
+
+        $productosValidados = [];
+
+        foreach ($productos as $indice => $idProducto) {
+            $cantidad = filter_var(
+                $cantidades[$indice],
+                FILTER_VALIDATE_INT
+            );
+
+            if (
+                !filter_var($idProducto, FILTER_VALIDATE_INT) ||
+                $cantidad === false ||
+                $cantidad <= 0
+            ) {
+                throw new Exception('Uno de los productos o cantidades no es válido.');
+            }
+
+            $consultaProducto->execute([':id' => $idProducto]);
+            $producto = $consultaProducto->fetch(PDO::FETCH_ASSOC);
+
+            if (!$producto) {
+                throw new Exception('Uno de los productos ya no está disponible.');
+            }
+
+            if ((int)$producto['existencia'] < $cantidad) {
+                throw new Exception(
+                    'No hay suficientes existencias de ' . $producto['nombre'] .
+                    '. Disponibles: ' . $producto['existencia']
+                );
+            }
+
+            $productosValidados[] = [
+                'id_producto' => (int)$idProducto,
+                'cantidad' => $cantidad
+            ];
+        }
+
+        $datosObservacion = [
+            'registrado_por' => $nombreCliente,
+            'observaciones' => trim($observaciones) !== ''
+                ? trim($observaciones)
+                : null,
+            'inventario_descontado' => false
+        ];
+
+        $observacionesJson = $this->guardarDatosObservacion(
+            $datosObservacion
+        );
+
+        $consultaReserva = $this->conexion->prepare(
+            "INSERT INTO reservas (
+                id_cliente,
+                fecha_limite_retiro,
+                estado,
+                observaciones
+            ) VALUES (
+                :cliente,
+                :fecha,
+                'PENDIENTE',
+                :observaciones
+            )"
+        );
+
+        $consultaReserva->execute([
+            ':cliente' => $idCliente,
+            ':fecha' => $fechaLimite !== '' ? $fechaLimite : null,
+            ':observaciones' => $observacionesJson
+        ]);
+
+        $idReserva = $this->conexion->lastInsertId();
+
+        $consultaDetalle = $this->conexion->prepare(
+            "INSERT INTO detalle_reserva (
+                id_reserva,
+                id_producto,
+                cantidad
+            ) VALUES (
+                :reserva,
+                :producto,
+                :cantidad
+            )"
+        );
+
+        foreach ($productosValidados as $producto) {
+            $consultaDetalle->execute([
+                ':reserva' => $idReserva,
+                ':producto' => $producto['id_producto'],
+                ':cantidad' => $producto['cantidad']
+            ]);
+        }
+
+        // Importante: aquí NO se descuenta inventario.
+        $this->conexion->commit();
+
+        return [
+            'exito' => true,
+            'mensaje' => 'Tu solicitud fue enviada correctamente.',
+            'id_reserva' => $idReserva
+        ];
+
+    } catch (Exception $e) {
+        if ($this->conexion->inTransaction()) {
+            $this->conexion->rollBack();
+        }
+
+        return [
+            'exito' => false,
+            'mensaje' => $e->getMessage()
+        ];
+    }
+}
+
+
+
     // =====================================
     // REGISTRAR RESERVACION
     // =====================================
@@ -481,7 +656,7 @@ class Reservacion
             $datosObservacion = [
                 'registrado_por' => $registradoPor,
                 'observaciones' => $observaciones !== '' ? $observaciones : null,
-                'inventario_descontado' => true
+                'inventario_descontado' => false
             ];
             $observacionesJson = $this->guardarDatosObservacion($datosObservacion);
 
@@ -501,29 +676,17 @@ class Reservacion
                 "INSERT INTO detalle_reserva (id_reserva, id_producto, cantidad)
                  VALUES (:reserva, :producto, :cantidad)"
             );
-            $consultaActualizarStock = $this->conexion->prepare(
-                "UPDATE productos SET existencia = :nueva WHERE id_producto = :id"
-            );
 
-            foreach ($productosValidados as $producto) {
-                $nuevaExistencia = $producto['existencia'] - $producto['cantidad'];
 
-                $consultaDetalle->execute([
-                    ':reserva' => $idReserva,
-                    ':producto' => $producto['id_producto'],
-                    ':cantidad' => $producto['cantidad']
-                ]);
-                $consultaActualizarStock->execute([
-                    ':nueva' => $nuevaExistencia,
-                    ':id' => $producto['id_producto']
-                ]);
+foreach ($productosValidados as $producto) {
 
-                $this->registrarMovimiento(
-                    $producto['id_producto'], $idUsuario, 'AJUSTE_SALIDA',
-                    $producto['cantidad'], $producto['existencia'], $nuevaExistencia,
-                    'RESERVA #' . $idReserva, 'Salida por creación de reservación'
-                );
-            }
+    $consultaDetalle->execute([
+        ':reserva' => $idReserva,
+        ':producto' => $producto['id_producto'],
+        ':cantidad' => $producto['cantidad']
+    ]);
+}
+
 
             $this->conexion->commit();
 
@@ -611,52 +774,85 @@ class Reservacion
                 "UPDATE productos SET existencia = :nueva WHERE id_producto = :id"
             );
 
-            // CANCELAR: devolver existencias solo si esta reserva las había descontado.
-            if ($estado === 'CANCELADA' && $inventarioDescontado) {
+          
+            // DEVOLVER INVENTARIO:
+            // Al cancelar una reserva descontada o volver de CONFIRMADA a PENDIENTE.
+            $debeDevolverInventario =
+                ($estado === 'CANCELADA') ||
+                ($estado === 'PENDIENTE' && $estadoActual === 'CONFIRMADA');
+
+            if ($debeDevolverInventario && $inventarioDescontado) {
+
                 foreach ($detalles as $detalle) {
-                    $anterior = (int) $detalle['existencia'];
-                    $cantidad = (int) $detalle['cantidad'];
+
+                    $anterior = (int)$detalle['existencia'];
+                    $cantidad = (int)$detalle['cantidad'];
                     $nueva = $anterior + $cantidad;
 
                     $consultaStock->execute([
                         ':nueva' => $nueva,
                         ':id' => $detalle['id_producto']
                     ]);
+
                     $this->registrarMovimiento(
-                        $detalle['id_producto'], $idUsuario, 'AJUSTE_ENTRADA',
-                        $cantidad, $anterior, $nueva,
-                        'RESERVA #' . $idReserva, 'Devolución por cancelación de reservación'
+                        $detalle['id_producto'],
+                        $idUsuario,
+                        'AJUSTE_ENTRADA',
+                        $cantidad,
+                        $anterior,
+                        $nueva,
+                        'RESERVA #' . $idReserva,
+                        'Devolución de inventario por cambio de estado'
                     );
                 }
+
                 $inventarioDescontado = false;
             }
 
-            // REACTIVAR: comprobar todos los productos antes de descontar cualquiera.
-            if ($estadoActual === 'CANCELADA' && in_array($estado, ['PENDIENTE', 'CONFIRMADA'], true)) {
+
+            // CONFIRMAR:
+            // Descontar inventario únicamente si todavía no se había descontado.
+            // Esto también contempla CANCELADA -> CONFIRMADA.
+            if ($estado === 'CONFIRMADA' && !$inventarioDescontado) {
+
+                // Primero comprobar todos los productos.
                 foreach ($detalles as $detalle) {
-                    if ((int) $detalle['existencia'] < (int) $detalle['cantidad']) {
+
+                    if ((int)$detalle['existencia'] < (int)$detalle['cantidad']) {
+
                         throw new Exception(
-                            'No hay existencias suficientes para reactivar la reservación. Producto: ' .
-                            $detalle['nombre'] . '. Disponibles: ' . $detalle['existencia'] .
+                            'No hay existencias suficientes para confirmar: ' .
+                            $detalle['nombre'] .
+                            '. Disponibles: ' . $detalle['existencia'] .
                             ', necesarias: ' . $detalle['cantidad'] . '.'
                         );
                     }
                 }
 
+                // Después descontar el inventario.
                 foreach ($detalles as $detalle) {
-                    $anterior = (int) $detalle['existencia'];
-                    $cantidad = (int) $detalle['cantidad'];
+
+                    $anterior = (int)$detalle['existencia'];
+                    $cantidad = (int)$detalle['cantidad'];
                     $nueva = $anterior - $cantidad;
+
                     $consultaStock->execute([
                         ':nueva' => $nueva,
                         ':id' => $detalle['id_producto']
                     ]);
+
                     $this->registrarMovimiento(
-                        $detalle['id_producto'], $idUsuario, 'AJUSTE_SALIDA',
-                        $cantidad, $anterior, $nueva,
-                        'RESERVA #' . $idReserva, 'Salida por reactivación de reservación'
+                        $detalle['id_producto'],
+                        $idUsuario,
+                        'AJUSTE_SALIDA',
+                        $cantidad,
+                        $anterior,
+                        $nueva,
+                        'RESERVA #' . $idReserva,
+                        'Salida por confirmación de reservación'
                     );
                 }
+
                 $inventarioDescontado = true;
             }
 

@@ -692,8 +692,9 @@ function mostrarNotificacion(mensaje) {
     actualizarBotonesEliminar();
     actualizarProductosSeleccionados();
 
-    contenedorProductos.querySelectorAll('.producto-reserva-fila').forEach(fila => {
-        validarExistenciaFila(fila, false);
-    });
+
+    contenedorProductos?.querySelectorAll('.producto-reserva-fila').forEach(fila => {
+    validarExistenciaFila(fila, false);
+});
 
 });

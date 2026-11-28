@@ -4,14 +4,17 @@ require_once __DIR__ . '/../app/controllers/HomeController.php';
 require_once __DIR__ . '/../app/controllers/AuthController.php';
 require_once __DIR__ . '/../app/controllers/DashboardController.php';
 require_once __DIR__ . '/../app/controllers/ProductoController.php';
+require_once __DIR__ . '/../app/models/Producto.php';
 require_once __DIR__ . '/../app/controllers/ProveedorController.php';
 require_once __DIR__ . '/../app/controllers/CompraController.php';
 require_once __DIR__ . '/../app/controllers/ClienteController.php';
+require_once __DIR__ . '/../app/controllers/CuentaClienteController.php';
 require_once __DIR__ . '/../app/controllers/ReporteController.php';
 require_once __DIR__ . '/../app/controllers/VentaController.php';
 require_once __DIR__ . '/../app/controllers/ReservacionController.php';
 require_once __DIR__ . '/../app/controllers/MovimientoInventarioController.php';
 require_once __DIR__ . '/../app/controllers/UsuarioController.php';
+require_once __DIR__ . '/../app/controllers/ReservacionClienteController.php';
 
 // Obtener la ruta solicitada
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -763,8 +766,120 @@ switch ($ruta) {
         exit;
 
 
+    // =========================================
+    // MÓDULO DE CUENTAS DE CLIENTES
+    // =========================================
+
+    case '/cliente/registro':
+
+        $cuentaController = new CuentaClienteController($conexion);
+        $cuentaController->registro();
+
+        break;
+
+
+    case '/cliente/login':
+
+        $cuentaController = new CuentaClienteController($conexion);
+        $cuentaController->login();
+
+        break;
+
+
+    case '/cliente/logout':
+
+        if (!isset($_SESSION['cliente'])) {
+            header('Location: /el_papelito/public/cliente/login');
+            exit;
+        }
+
+        $cuentaController = new CuentaClienteController($conexion);
+        $cuentaController->logout();
+
+        break;
+
+
+    // =========================================
+    // INICIO DEL CLIENTE
+    // =========================================
+
+    case '/cliente/inicio':
+
+        if (!isset($_SESSION['cliente'])) {
+            header('Location: /el_papelito/public/cliente/login');
+            exit;
+        }
+
+        require __DIR__ . '/../app/views/clientes/inicio.php';
+
+        break;
+
+
+    // =========================================
+    // CATÁLOGO DE PRODUCTOS DEL CLIENTE
+    // =========================================
+
+    case '/cliente/productos':
+
+        if (!isset($_SESSION['cliente'])) {
+            header('Location: /el_papelito/public/cliente/login');
+            exit;
+        }
+
+        $productoModelo = new Producto($conexion);
+
+        $productos = $productoModelo->listarProductos(1);
+
+        require __DIR__ . '/../app/views/clientes/productos.php';
+
+        break;
+
+
+    // =========================================
+    // RESERVAS DEL CLIENTE
+    // =========================================
+
+    case '/cliente/reservas':
+
+        $controlador = new ReservacionClienteController($conexion);
+        $controlador->verCarrito();
+
+        break;
+
+
+    case '/cliente/carrito/agregar':
+
+        $controlador = new ReservacionClienteController($conexion);
+        $controlador->agregar();
+
+        break;
+
+
+    case '/cliente/carrito/actualizar':
+
+        $controlador = new ReservacionClienteController($conexion);
+        $controlador->actualizarCarrito();
+
+        break;
+
+
+    case '/cliente/reservas/confirmar':
+
+        $controlador = new ReservacionClienteController($conexion);
+        $controlador->confirmar();
+
+        break;
+
+
+    // =========================================
+    // RUTA NO ENCONTRADA
+    // =========================================
+
     default:
+
         http_response_code(404);
         echo "Página no encontrada";
+
         break;
+
 }

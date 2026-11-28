@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Librería El Papelito</title>
-    <link rel="stylesheet" href="/LibreriaElPapelito/public/assets/css/cliente-publico.css?v=<?php echo time(); ?>">
-</head>
+<link rel="stylesheet" href="/el_papelito/public/assets/css/cliente-publico.css?v=<?php echo time(); ?>"></head>
 <body>
 
 <div class="client-container">
@@ -13,7 +12,7 @@
     <nav class="client-navbar">
         <div class="navbar-inner">
             <a href="/LibreriaElPapelito/app/views/clientes/inicio.php" class="brand">
-    <img src="/LibreriaElPapelito/public/assets/img/logo_el_papelito.jpeg" alt="Mini Librería El Papelito" class="brand-logo">
+    <img src="/el_papelito/public/assets/img/logo_el_papelito.jpeg" alt="Mini Librería El Papelito" class="brand-logo">
     <span>El Papelito</span>
 </a>
             <div class="nav-links">

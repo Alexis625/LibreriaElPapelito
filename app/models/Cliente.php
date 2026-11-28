@@ -315,4 +315,134 @@ class Cliente
             ];
         }
     }
+
+    // Buscar un cliente por su correo electrónico
+    public function obtenerPorCorreo($correo)
+    {
+        $sql = "SELECT *
+                FROM clientes
+                WHERE correo = :correo
+                LIMIT 1";
+
+        $consulta = $this->conexion->prepare($sql);
+        $consulta->execute([
+            ':correo' => strtolower(trim($correo))
+        ]);
+
+        return $consulta->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // Registrar una cuenta para un cliente
+    public function registrarCuenta(
+        $nombreCompleto,
+        $telefono,
+        $correo,
+        $direccion,
+        $password
+    ) {
+        try {
+            $nombreCompleto = trim($nombreCompleto);
+            $telefono = trim($telefono ?? '');
+            $correo = strtolower(trim($correo));
+            $direccion = trim($direccion ?? '');
+
+            // Validar nombre
+            if (
+                $nombreCompleto === '' ||
+                mb_strlen($nombreCompleto) > 120
+            ) {
+                throw new Exception("El nombre no es válido.");
+            }
+
+            // Validar correo
+            if (
+                !filter_var($correo, FILTER_VALIDATE_EMAIL) ||
+                mb_strlen($correo) > 120
+            ) {
+                throw new Exception("El correo no es válido.");
+            }
+
+            // Validar contraseña
+            if (strlen($password) < 8) {
+                throw new Exception(
+                    "La contraseña debe tener al menos 8 caracteres."
+                );
+            }
+
+            if (mb_strlen($telefono) > 25 || mb_strlen($direccion) > 255) {
+                throw new Exception("Los datos ingresados son demasiado largos.");
+            }
+
+            // Comprobar si el correo ya está registrado
+            if ($this->obtenerPorCorreo($correo)) {
+                throw new Exception("Este correo ya está registrado.");
+            }
+
+            // Proteger la contraseña
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+            $sql = "INSERT INTO clientes (
+                        nombre_completo,
+                        telefono,
+                        correo,
+                        direccion,
+                        password_hash
+                    ) VALUES (
+                        :nombre,
+                        :telefono,
+                        :correo,
+                        :direccion,
+                        :password_hash
+                    )";
+
+            $consulta = $this->conexion->prepare($sql);
+
+            $consulta->execute([
+                ':nombre' => $nombreCompleto,
+                ':telefono' => $telefono !== '' ? $telefono : null,
+                ':correo' => $correo,
+                ':direccion' => $direccion !== '' ? $direccion : null,
+                ':password_hash' => $passwordHash
+            ]);
+
+            return [
+                'exito' => true,
+                'id_cliente' => $this->conexion->lastInsertId()
+            ];
+
+        } catch (Throwable $e) {
+            error_log("Error al registrar cuenta: " . $e->getMessage());
+
+            return [
+                'exito' => false,
+                'mensaje' => $e instanceof Exception
+                    ? $e->getMessage()
+                    : 'No fue posible crear la cuenta.'
+            ];
+        }
+    }
+
+    // Verificar las credenciales del cliente
+    public function verificarCredenciales($correo, $password)
+    {
+        $cliente = $this->obtenerPorCorreo($correo);
+
+        if (!$cliente) {
+            return false;
+        }
+
+        if (
+            empty($cliente['password_hash']) ||
+            !password_verify($password, $cliente['password_hash'])
+        ) {
+            return false;
+        }
+
+        if ((int)$cliente['activo'] !== 1) {
+            return false;
+        }
+
+        return $cliente;
+    }
+
 }
